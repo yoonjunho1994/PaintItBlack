@@ -1,0 +1,17 @@
+
+.vs/norm_release/v15/.suo
+*.db
+*.ipch
+*.obj
+*.log
+*.pch
+*.tlog
+*.idb
+*.pdb
+*.dll
+*.exp
+*.ilk
+Debug/norm.lib
+*.ipdb
+*.iobj
+Release/norm.lib
