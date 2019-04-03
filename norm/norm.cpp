@@ -7,6 +7,7 @@
 #include "hook_socket.h"
 #include "hook_session.h"
 #include "hook_dx.h"
+#include "hook_gamemode.h"
 
 #include "mod_overlay.h"
 #include "mod_statistics.h"
@@ -38,7 +39,7 @@ void norm::install_mods()
 	//INSTALL_MOD(overlay);
 	INSTALL_MOD(statistics);
 	INSTALL_MOD(timestamp);
-	INSTALL_MOD(overlay_new)
+	INSTALL_MOD(overlay_new);
 }
 
 void norm::start()
@@ -71,6 +72,7 @@ void norm::start()
 	total_hooks += renderer_detour(sptr);
 	total_hooks += session_detour(sptr);
 	total_hooks += dx_detour(sptr);
+	total_hooks += gamemode_detour(sptr);
 
 	this->install_mods();
 

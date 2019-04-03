@@ -15,3 +15,4 @@ Debug/norm.lib
 *.ipdb
 *.iobj
 Release/norm.lib
+*.opendb

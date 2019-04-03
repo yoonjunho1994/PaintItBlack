@@ -155,6 +155,8 @@
     <ClInclude Include="CProxyIDirect3DDevice7.h" />
     <ClInclude Include="CProxyIDirectDraw7.h" />
     <ClInclude Include="FastFont.h" />
+    <ClInclude Include="hook.h" />
+    <ClInclude Include="hook_gamemode.h" />
     <ClInclude Include="hook_chat.h" />
     <ClInclude Include="client_ver.h" />
     <ClInclude Include="debug_socket.h" />
@@ -179,10 +181,12 @@
     <ClCompile Include="CProxyIDirect3DDevice7.cpp" />
     <ClCompile Include="CProxyIDirectDraw7.cpp" />
     <ClCompile Include="FastFont.cpp" />
+    <ClCompile Include="hook.cpp" />
     <ClCompile Include="hook_chat.cpp" />
     <ClCompile Include="debug_socket.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="hook_dx.cpp" />
+    <ClCompile Include="hook_gamemode.cpp" />
     <ClCompile Include="hook_session.cpp" />
     <ClCompile Include="mod.cpp" />
     <ClCompile Include="mod_overlay_new.cpp" />

@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "hook_session.h"
+#include "hook_gamemode.h"
 #include "detours.h"
 
 
 static std::shared_ptr<norm_dll::norm> c_state;
 //static std::vector<std::shared_ptr<norm_dll::mod>> GetTalkType_callbacks;
 
-bool GetTalkType_detoured = false;
+bool GetTalkType_detoured = true;
+int init_ping_calls = 2;
 
 #if  (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
 #define GETTALKTYPE
@@ -42,6 +44,33 @@ signed int __fastcall GetTalkType_hook(void *this_obj, DWORD EDX, char *a2, int 
 	return original_GetTalkType(this_obj, a2, a3, a4);
 }
 
+#if CLIENT_VER == 20150000
+#define RECALCPING
+DWORD CSession__RecalcAveragePingTime_func = 0x00935560;
+typedef  void(__thiscall *CSession__RecalcAveragePingTime)(void*, unsigned long);
+#endif
+
+void __fastcall CSession__RecalcAveragePingTime_hook(void* this_obj, DWORD EDX, unsigned long a1)
+{
+	CSession__RecalcAveragePingTime original_recalc = (CSession__RecalcAveragePingTime)CSession__RecalcAveragePingTime_func;
+	c_state->dbg_sock->do_send("CSession__RecalcAveragePingTime called!");
+
+	char buf[64];
+	sprintf_s(buf, "Arg: %lu", a1);
+	c_state->dbg_sock->do_send(buf);
+
+	print_time(c_state.get());
+
+	if (init_ping_calls > 0) {
+		init_ping_calls--;
+		return;
+	}
+
+	if (!initialize_called())
+		original_recalc(this_obj, a1);
+}
+
+
 /*int register_GetTalkType_hook(std::shared_ptr<norm_dll::mod> mod_ptr) {
 #ifdef GETTALKTYPE
 	if (!GetTalkType_detoured)
@@ -66,6 +95,16 @@ int session_detour(std::shared_ptr<norm_dll::norm> state_) {
 		GetTalkType_detoured = true;
 		hook_count++;
 	} else 
+		c_state->dbg_sock->do_send(info_buf);
+#endif
+
+#ifdef RECALCPING
+	err = DetourAttach(&(LPVOID&)CSession__RecalcAveragePingTime_func, &CSession__RecalcAveragePingTime_hook);
+	CHECK(info_buf, err);
+	if (err == NO_ERROR) {
+		hook_count++;
+	}
+	else
 		c_state->dbg_sock->do_send(info_buf);
 #endif
 

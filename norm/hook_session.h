@@ -1,6 +1,7 @@
 #pragma once
 #include "client_ver.h"
 #include "norm.h"
+#include "hook.h"
 
 /* session: contains all hooks related to the ingame chat system */
 

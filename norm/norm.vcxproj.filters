@@ -111,6 +111,12 @@
     <ClInclude Include="mod_overlay_new.h">
       <Filter>Headerdateien\mods</Filter>
     </ClInclude>
+    <ClInclude Include="hook_gamemode.h">
+      <Filter>Headerdateien\hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook.h">
+      <Filter>Headerdateien\hooks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -172,6 +178,12 @@
     </ClCompile>
     <ClCompile Include="mod_overlay_new.cpp">
       <Filter>Quelldateien\mods</Filter>
+    </ClCompile>
+    <ClCompile Include="hook_gamemode.cpp">
+      <Filter>Quelldateien\hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="hook.cpp">
+      <Filter>Quelldateien\hooks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
