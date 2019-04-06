@@ -152,13 +152,13 @@ int overlay_new::get_talk_type(void **this_obj, void **src, int *a1, int *a2, in
 int overlay_new::get_talk_type(void**this_obj, char** src, int* a1, char** a2, int* retval)
 #endif
 {
-	if (strcmp((char*)*src, "/pingo2") == 0) {
+	if (strcmp((char*)*src, "/ping") == 0) {
 		this->display_ping ^= 1;
 		char buf[64];
 		if (this->display_ping)
-			sprintf_s(buf, "Ping2 is now displayed.");
+			sprintf_s(buf, "Ping is now displayed.");
 		else
-			sprintf_s(buf, "Ping2 is no longer displayed.");
+			sprintf_s(buf, "Ping is no longer displayed.");
 		this->print_to_chat(buf);
 		*retval = -1;
 		return 1;

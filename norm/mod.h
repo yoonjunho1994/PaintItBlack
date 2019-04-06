@@ -22,6 +22,7 @@ public:
 #endif
 	virtual HRESULT begin_scene(IDirect3DDevice7**) { return E_NOTIMPL; }
 	virtual HRESULT end_scene(IDirect3DDevice7**) { return E_NOTIMPL; }
+	virtual HRESULT WaitForVerticalBlank(DWORD*, HANDLE*) { return E_NOTIMPL; };
 	virtual void ddraw_release() {}
 
 protected:

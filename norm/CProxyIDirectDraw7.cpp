@@ -4,6 +4,14 @@
 
 CProxyIDirectDraw7* CProxyIDirectDraw7::lpthis;
 
+HRESULT CProxyIDirectDraw7::Proxy_WaitForVerticalBlank(DWORD dwFlags, HANDLE hEvent)
+{
+	for (auto it : this->c_state->mods)
+		if (it->WaitForVerticalBlank(&dwFlags, &hEvent) == DD_OK)
+			return DD_OK;
+	return m_Instance->WaitForVerticalBlank(dwFlags, hEvent);
+}
+
 HRESULT CProxyIDirectDraw7::Proxy_QueryInterface(THIS_ REFIID riid, LPVOID FAR * ppvObj)
 {
 	

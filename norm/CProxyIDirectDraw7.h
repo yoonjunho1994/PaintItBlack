@@ -64,10 +64,10 @@ public:
 		/*{
 			return Proxy_SetDisplayMode(p1, p2, p3, p4, p5);
 		}*/
-		STDMETHOD(WaitForVerticalBlank)(THIS_ DWORD p1, HANDLE p2)							PROXY2(WaitForVerticalBlank)
-		/*{
+		STDMETHOD(WaitForVerticalBlank)(THIS_ DWORD p1, HANDLE p2)							//PROXY2(WaitForVerticalBlank)
+		{
 			return Proxy_WaitForVerticalBlank(p1, p2);
-		}*/
+		}
 
 		/*** Added in the v2 interface ***/
 		STDMETHOD(GetAvailableVidMem)(THIS_ LPDDSCAPS2 p1, LPDWORD p2, LPDWORD p3)	PROXY3(GetAvailableVidMem)
@@ -92,7 +92,7 @@ public:
 		//HRESULT Proxy_GetDisplayMode(LPDDSURFACEDESC2 p1);
 		//HRESULT Proxy_SetCooperativeLevel(HWND p1, DWORD p2);
 		//HRESULT Proxy_SetDisplayMode(DWORD p1, DWORD p2, DWORD p3, DWORD p4, DWORD p5);
-		//HRESULT Proxy_WaitForVerticalBlank(DWORD dwFlags, HANDLE hEvent);
+		HRESULT Proxy_WaitForVerticalBlank(DWORD dwFlags, HANDLE hEvent);
 		HRESULT Proxy_QueryInterface(THIS_ REFIID riid, LPVOID FAR * ppvObj);
 		//HRESULT Proxy_RestoreAllSurfaces(void);
 };

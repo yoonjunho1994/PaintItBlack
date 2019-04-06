@@ -12,6 +12,7 @@ public:
 	void send_msg(void**, int*, int*, int*, int*, int*);
 #endif
 	int get_talk_type(void**, void**, int*, int*, int*);
+	int get_talk_type(void**, char**, int*, char**, int*);
 	//void register_hooks();
 
 private:

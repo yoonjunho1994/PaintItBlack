@@ -48,6 +48,10 @@ signed int __fastcall GetTalkType_hook(void *this_obj, DWORD EDX, char *a2, int 
 #define RECALCPING
 DWORD CSession__RecalcAveragePingTime_func = 0x00935560;
 typedef  void(__thiscall *CSession__RecalcAveragePingTime)(void*, unsigned long);
+#elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
+#define RECALCPING
+DWORD CSession__RecalcAveragePingTime_func = 0x00A1F510;
+typedef  void(__thiscall *CSession__RecalcAveragePingTime)(void*, unsigned long);
 #endif
 
 void __fastcall CSession__RecalcAveragePingTime_hook(void* this_obj, DWORD EDX, unsigned long a1)

@@ -5,7 +5,7 @@
 /* debug */
 static std::shared_ptr<norm_dll::norm> c_state;
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
+//#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
 #ifdef COMENC
 int (WINAPI *pSend)(SOCKET s, const char* buf, int len, int flags) = send;
 int (WINAPI *pRecv)(SOCKET s, char* buf, int len, int flags) = recv;
@@ -30,7 +30,7 @@ int WINAPI recv_hook(SOCKET s, char* buf, int len, int flags) {
 	return ret_len;
 }
 #endif /* COMENC */
-#endif /* 20180620 */
+//#endif /* 20180620 */
 
 int socket_detour(std::shared_ptr<norm_dll::norm> state_) {
 	int err = 0;

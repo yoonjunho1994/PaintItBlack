@@ -8,20 +8,22 @@
 static std::shared_ptr<norm_dll::norm> c_state;
 CProxyIDirectDraw7 *lpcDD;
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
+/*#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
 DWORD DirectDrawCreateEx_addr = 0x00A58D04;
 #define DX
 #elif CLIENT_VER == 20150000
-DWORD DirectDrawCreateEx_addr = 0x0096c42a;
+DWORD DirectDrawCreateEx_addr = 0x0096c42a;*/
+HRESULT(WINAPI *pDirectDrawCreateEx)(GUID *lpGuid, LPVOID *lplpDD, const IID &iid, IUnknown *pUnkOuter) = DirectDrawCreateEx;
 #define DX
-#endif
-typedef HRESULT(WINAPI *pDirectDrawCreateEx)(GUID *lpGuid, LPVOID *lplpDD, const IID *const iid, IUnknown *pUnkOuter);
+//#endif
+//typedef HRESULT(WINAPI *pDirectDrawCreateEx)(GUID *lpGuid, LPVOID *lplpDD, const IID *const iid, IUnknown *pUnkOuter);
 
-HRESULT WINAPI DirectDrawCreateEx_hook(GUID *lpGuid, LPVOID *lplpDD, const IID *const iid, IUnknown *pUnkOuter)
+HRESULT WINAPI DirectDrawCreateEx_hook(GUID *lpGuid, LPVOID *lplpDD, const IID &iid, IUnknown *pUnkOuter)
 {
 	c_state->dbg_sock->do_send("DirectDrawCreateEx called!");
 
-	HRESULT Result = ((pDirectDrawCreateEx)DirectDrawCreateEx_addr)(lpGuid, lplpDD, iid, pUnkOuter);
+	//HRESULT Result = ((pDirectDrawCreateEx)DirectDrawCreateEx_addr)(lpGuid, lplpDD, iid, pUnkOuter);
+	HRESULT Result = pDirectDrawCreateEx(lpGuid, lplpDD, iid, pUnkOuter);
 	if (FAILED(Result))
 		return Result;
 
@@ -38,7 +40,7 @@ int dx_detour(std::shared_ptr<norm_dll::norm> state_) {
 	c_state = state_;
 
 #ifdef DX
-	err = DetourAttach(&(LPVOID&)DirectDrawCreateEx_addr, DirectDrawCreateEx_hook);
+	err = DetourAttach(&(LPVOID&)pDirectDrawCreateEx, DirectDrawCreateEx_hook);
 	CHECK(info_buf, err);
 	c_state->dbg_sock->do_send(info_buf);
 	hook_count++;

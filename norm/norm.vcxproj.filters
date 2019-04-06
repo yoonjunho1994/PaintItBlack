@@ -117,6 +117,9 @@
     <ClInclude Include="hook.h">
       <Filter>Headerdateien\hooks</Filter>
     </ClInclude>
+    <ClInclude Include="mod_graphics.h">
+      <Filter>Headerdateien\mods</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -184,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="hook.cpp">
       <Filter>Quelldateien\hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="mod_graphics.cpp">
+      <Filter>Quelldateien\mods</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

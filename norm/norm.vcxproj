@@ -127,7 +127,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>detours.lib;ddraw.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -164,6 +164,7 @@
     <ClInclude Include="hook_dx.h" />
     <ClInclude Include="hook_session.h" />
     <ClInclude Include="mod.h" />
+    <ClInclude Include="mod_graphics.h" />
     <ClInclude Include="mod_overlay_new.h" />
     <ClInclude Include="mod_statistics.h" />
     <ClInclude Include="norm.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="hook_gamemode.cpp" />
     <ClCompile Include="hook_session.cpp" />
     <ClCompile Include="mod.cpp" />
+    <ClCompile Include="mod_graphics.cpp" />
     <ClCompile Include="mod_overlay_new.cpp" />
     <ClCompile Include="mod_statistics.cpp" />
     <ClCompile Include="norm.cpp" />

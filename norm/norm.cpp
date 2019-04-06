@@ -13,6 +13,7 @@
 #include "mod_statistics.h"
 #include "mod_timestamp.h"
 #include "mod_overlay_new.h"
+#include "mod_graphics.h"
 
 #include <winhttp.h>
 
@@ -37,9 +38,10 @@ void norm::install_mods()
 {
 	// Disable a mod by commenting out the specific line.
 	//INSTALL_MOD(overlay);
-	INSTALL_MOD(statistics);
+	//INSTALL_MOD(statistics);
 	INSTALL_MOD(timestamp);
 	INSTALL_MOD(overlay_new);
+	INSTALL_MOD(graphics);
 }
 
 void norm::start()
@@ -82,8 +84,45 @@ void norm::start()
 
 	sprintf_s(info_buf, "Total hooks available: %d", total_hooks);
 	dbg_sock->do_send(info_buf);
-}
+	
+	//
+	// patching .text section
+	//
+	// ping interval change from 12000 to 2000
+#if (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
+	LPVOID hex_code = (LPVOID)0x0094AB1E;
+#elif CLIENT_VER == 20150000
+	LPVOID hex_code = (LPVOID)0x0087344E;
+#endif
+	DWORD old_protect;
 
+	int ret = VirtualProtect(hex_code, 6, 0x04, &old_protect);
+	sprintf_s(info_buf, "VirtualProtect ret val: %d", ret);
+	dbg_sock->do_send(info_buf);
+	
+	char hex_code_str[128] = "Changing ASM instructions for ping interval:\n ";
+	char tmp[4];
+	for (int i = 0; i < 6; i++) {
+		sprintf_s(tmp, "%x ", ((BYTE*)hex_code)[i]);
+		strcat_s(hex_code_str, tmp);
+	}
+	strcat_s(hex_code_str, " -> ");
+
+	for (int i = 0; i < 6; i++) {
+		if (i == 2)
+			((BYTE*)hex_code)[i] = 0xD0;
+		if (i == 3)
+			((BYTE*)hex_code)[i] = 0x07;
+		sprintf_s(tmp, "%x ", ((BYTE*)hex_code)[i]);
+		strcat_s(hex_code_str, tmp);
+	}
+
+	dbg_sock->do_send(hex_code_str);
+	DWORD old_reset_protect;
+	ret = VirtualProtect(hex_code, 6, old_protect, &old_reset_protect);
+	sprintf_s(info_buf, "VirtualProtect reset ret val: %d", ret);
+	dbg_sock->do_send(info_buf);
+}
 
 norm::~norm()
 {

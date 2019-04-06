@@ -14,6 +14,9 @@ long long init_time = 0;
 #if CLIENT_VER == 20150000
 #define INITIALIZE
 DWORD CGameMode__Initialize_func = 0x00860160;
+#elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
+#define INITIALIZE
+DWORD CGameMode__Initialize_func = 0x009361A0;
 #endif
 void __fastcall CGameMode__Initialize_hook(void* this_obj, DWORD EDX)
 {
@@ -27,6 +30,9 @@ void __fastcall CGameMode__Initialize_hook(void* this_obj, DWORD EDX)
 #if CLIENT_VER == 20150000
 #define ONINIT
 DWORD CGameMode__OnInit_func = 0x00866880;
+#elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
+#define ONINIT
+DWORD CGameMode__OnInit_func = 0x0093D100;
 #endif
 void __fastcall CGameMode__OnInit_hook(void* this_obj, DWORD EDX, const char * a1)
 {
@@ -37,6 +43,7 @@ void __fastcall CGameMode__OnInit_hook(void* this_obj, DWORD EDX, const char * a
 }
 
 
+/*
 #if CLIENT_VER == 20150000
 //#define MAPMOVE	// Does not work when used with debugger. 
 					// Currently not needed by the dll.
@@ -49,7 +56,7 @@ void __fastcall CGameMode__Zc_Npcack_Mapmove_hook(void* this_obj, DWORD EDX, con
 	print_time(c_state.get());
 	original_mapmove(this_obj, a1);
 }
-
+*/
 
 bool initialize_called()
 {
