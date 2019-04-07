@@ -15,5 +15,5 @@ constexpr auto VERIFY_STR = "D:\\Source\\Korea\\RO_2018-06-20#2\\RagnarokClient\
 
 #elif CLIENT_VER == 20150000
 constexpr auto VERIFY_ADDR = 0x00ADB720;
-constexpr auto VERIFY_STR = "D:\Source\Korea\RO_2015-05-13\RagnarokClient\Release\Ragexe.pdb";
+constexpr auto VERIFY_STR = "D:\\Source\\Korea\\RO_2015-05-13\\RagnarokClient\\Release\\Ragexe.pdb";
 #endif

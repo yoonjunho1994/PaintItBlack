@@ -68,7 +68,7 @@ void norm::start()
 #ifdef CLIENT_VER_RE
 		sprintf_s(info_buf, "Client is not compatible with %dRE-norm.dll", CLIENT_VER_RE);
 #else
-		sprintf_s(info_buf, "Client is not compatible with %d-norm.dll", CLIENT_VER_RE);
+		sprintf_s(info_buf, "Client is not compatible with %d-norm.dll", CLIENT_VER);
 #endif
 		MessageBoxA(0, info_buf, "norm.dll error!", MB_OK);
 		return;
