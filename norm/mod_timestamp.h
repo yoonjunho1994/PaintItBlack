@@ -6,11 +6,11 @@ class timestamp :
 public:
 	timestamp(norm_dll::norm* c_state);
 	virtual ~timestamp();
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621) 
+//#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621) 
 	void send_msg(void**, int*, void**, void**, int*, int*);
-#elif CLIENT_VER == 20150000
+//#elif CLIENT_VER == 20150000
 	void send_msg(void**, int*, int*, int*, int*, int*);
-#endif
+//#endif
 	int get_talk_type(void**, void**, int*, int*, int*);
 	int get_talk_type(void**, char**, int*, char**, int*);
 	//void register_hooks();

@@ -38,7 +38,7 @@ namespace norm_dll {
 			char len = strlen(sendbuf);
 			int res = send(ConnectSocket, &len, 1, 0);
 			if (res == SOCKET_ERROR) {
-				MessageBox(0, (LPCWSTR)"send failed with error!", (LPCWSTR)"norm.dll error!", MB_OK);
+				MessageBoxA(0, "send failed with error!", "norm.dll error!", MB_OK);
 				closesocket(ConnectSocket);
 				WSACleanup();
 				return 1;
@@ -46,7 +46,7 @@ namespace norm_dll {
 
 			res = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
 			if (res == SOCKET_ERROR) {
-				MessageBox(0, (LPCWSTR)"send failed with error!", (LPCWSTR)"norm.dll error!", MB_OK);
+				MessageBoxA(0, "send failed with error!", "norm.dll error!", MB_OK);
 				//printf("send failed with error: %d\n", WSAGetLastError());
 				closesocket(ConnectSocket);
 				WSACleanup();
@@ -71,7 +71,7 @@ namespace norm_dll {
 		iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 		if (iResult != 0) {
 			//printf("WSAStartup failed with error: %d\n", iResult);
-			MessageBox(0, (LPCWSTR)"WSAStartup failed with error!", (LPCWSTR)"norm.dll error!", MB_OK);
+			MessageBoxA(0, "WSAStartup failed with error!", "norm.dll error!", MB_OK);
 			return 1;
 		}
 
@@ -84,7 +84,7 @@ namespace norm_dll {
 		iResult = getaddrinfo(this->ip.c_str(), this->port.c_str(), &hints, &result);
 		if (iResult != 0) {
 			//printf("getaddrinfo failed with error: %d\n", iResult);
-			MessageBox(0, (LPCWSTR)"getaddrinfo failed with error!", (LPCWSTR)"norm.dll error!", MB_OK);
+			MessageBoxA(0, "getaddrinfo failed with error!", "norm.dll error!", MB_OK);
 			WSACleanup();
 			return 1;
 		}
@@ -94,7 +94,7 @@ namespace norm_dll {
 				ptr->ai_protocol);
 		if (ConnectSocket == INVALID_SOCKET) {
 			//printf("socket failed with error: %ld\n", WSAGetLastError());
-			MessageBox(0, (LPCWSTR)"socket failed with error!", (LPCWSTR)"norm.dll error!", MB_OK);
+			MessageBoxA(0, "socket failed with error!", "norm.dll error!", MB_OK);
 			WSACleanup();
 			return 1;
 		}
@@ -108,7 +108,7 @@ namespace norm_dll {
 
 		if (ConnectSocket == INVALID_SOCKET) {
 			//printf("Unable to connect to server!\n");
-			MessageBox(0, (LPCWSTR)"Unable to connect to server!!", (LPCWSTR)"norm.dll error!", MB_OK);
+			MessageBoxA(0, "Unable to connect to server!", "norm.dll error!", MB_OK);
 			WSACleanup();
 			return 1;
 		}

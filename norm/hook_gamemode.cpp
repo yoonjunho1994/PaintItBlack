@@ -17,6 +17,9 @@ DWORD CGameMode__Initialize_func = 0x00860160;
 #elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
 #define INITIALIZE
 DWORD CGameMode__Initialize_func = 0x009361A0;
+#elif CLIENT_VER_RE == 20180621
+#define INITIALIZE
+DWORD CGameMode__Initialize_func = 0x009F0990;
 #endif
 void __fastcall CGameMode__Initialize_hook(void* this_obj, DWORD EDX)
 {
@@ -33,6 +36,9 @@ DWORD CGameMode__OnInit_func = 0x00866880;
 #elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
 #define ONINIT
 DWORD CGameMode__OnInit_func = 0x0093D100;
+#elif CLIENT_VER_RE == 20180621
+#define ONINIT
+DWORD CGameMode__OnInit_func = 0x009F7940;
 #endif
 void __fastcall CGameMode__OnInit_hook(void* this_obj, DWORD EDX, const char * a1)
 {

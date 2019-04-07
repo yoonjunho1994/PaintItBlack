@@ -52,10 +52,17 @@ void norm::start()
 	//c_state = std::make_shared<state>(dbg_sock);
 	int err = dbg_sock->do_connect();
 	if (err != 0) {
-		MessageBox(0, (LPCWSTR)"Unable to connect to the debug socket!", (LPCWSTR)"norm.dll error!", MB_OK);
+		MessageBoxA(0, "Unable to connect to the debug socket!", "norm.dll error!", MB_OK);
 		dbg_sock->disabled = 1;
 	}
 	dbg_sock->do_send("Hello Debugger!");
+#ifdef CLIENT_VER
+	sprintf_s(info_buf, "DLL compiled for: %d", CLIENT_VER);
+#endif
+#ifdef CLIENT_VER_RE
+	sprintf_s(info_buf, "DLL compiled for: %dRE", CLIENT_VER_RE);
+#endif
+	dbg_sock->do_send(info_buf);
 
 	/* Hook functions. */
 	err = DetourTransactionBegin();
@@ -89,10 +96,13 @@ void norm::start()
 	// patching .text section
 	//
 	// ping interval change from 12000 to 2000
+	// Search for: 12000
 #if (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
 	LPVOID hex_code = (LPVOID)0x0094AB1E;
 #elif CLIENT_VER == 20150000
 	LPVOID hex_code = (LPVOID)0x0087344E;
+#elif CLIENT_VER_RE == 20180621
+	LPVOID hex_code = (LPVOID)0x00A054CE;
 #endif
 	DWORD old_protect;
 

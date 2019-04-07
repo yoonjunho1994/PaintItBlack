@@ -18,7 +18,7 @@ ULONG renderer_get_height();
 int renderer_get_fps();
 
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER == 20150000)
+#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER == 20150000 || CLIENT_VER_RE == 20180621)
 typedef int(__thiscall *CRenderer__TextOutScreen)(void*, int, int, LPCSTR, COLORREF);
 typedef bool(__fastcall *CRenderer__DrawScene)(void*);
 #endif

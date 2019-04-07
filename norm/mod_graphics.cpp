@@ -9,7 +9,7 @@ graphics::~graphics()
 {
 }
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621) 
+#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621) 
 int graphics::get_talk_type(void **this_obj, void **src, int *a1, int *a2, int* retval)
 #elif CLIENT_VER == 20150000
 int graphics::get_talk_type(void**this_obj, char** src, int* a1, char** a2, int* retval)

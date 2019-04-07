@@ -8,19 +8,23 @@ static std::shared_ptr<norm_dll::norm> c_state;
 
 bool SendMsg_detoured = false;
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
+#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621)
 #define SENDMSG
+#if CLIENT_VER_RE == 20180621
+DWORD UIWindowMgr_SendMsg_func = 0x00720AC0;
+#else
 DWORD UIWindowMgr_SendMsg_func = 0x0071ED80;
+#endif
 int __fastcall UIWindowMgr_SendMsg_hook(void* this_obj, DWORD EDX, int a1, void* a2, void* a3, int a4, int a5)
 
 #elif CLIENT_VER == 20150000
 #define SENDMSG
 DWORD UIWindowMgr_SendMsg_func = 0x005F4CA0;
 int __fastcall UIWindowMgr_SendMsg_hook(void* this_obj, DWORD EDX, int a1, int a2, int a3, int a4, int a5)
-#else
-// fallback to have valid function
-int __fastcall UIWindowMgr_SendMsg_hook(void* this_obj, DWORD EDX, int a1, int a2, int a3, int a4, int a5)
 #endif
+// fallback to have valid function
+//int __fastcall UIWindowMgr_SendMsg_hook(void* this_obj, DWORD EDX, int a1, int a2, int a3, int a4, int a5)
+//#endif
 {
 	UIWindowMgr_SendMsg original_sendmsg = (UIWindowMgr_SendMsg)UIWindowMgr_SendMsg_func;
 /*
@@ -69,6 +73,8 @@ DWORD get_SendMsg_addr() {
 	return 0x0071ED80;
 #elif CLIENT_VER == 20150000
 	return 0x005F4CA0;
+#elif CLIENT_VER_RE == 20180621
+	return 0x00720AC0;
 #endif
 	return 0;
 }

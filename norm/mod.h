@@ -13,7 +13,7 @@ public:
 	virtual ~mod() {}
 	//virtual void register_hooks(void) = 0;
 	virtual void draw_scene(void*) { /*no_override();*/ }
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
+#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621)
 	virtual void send_msg(void**, int*, void**, void**, int*, int*) { /*no_override();*/ }
 	virtual int get_talk_type(void**, void**, int*, int*, int*) { /*no_override();*/ return 0; }
 #elif CLIENT_VER == 20150000

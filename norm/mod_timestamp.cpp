@@ -13,7 +13,7 @@ timestamp::~timestamp()
 {
 }
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621) 
+#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621) 
 void timestamp::send_msg(void** this_obj, int* a1, void** a2, void** a3, int* a4, int* a5)
 #elif CLIENT_VER == 20150000
 void timestamp::send_msg(void** this_obj, int* a1, int*   a2, int*   a3, int* a4, int* a5)
@@ -31,13 +31,13 @@ void timestamp::send_msg(void** this_obj, int* a1, int*   a2, int*   a3, int* a4
 		sprintf_s(this->msg_buf, "[%s] %s", ts, (char*)*a2);
 #if CLIENT_VER == 20150000
 		*a2 = (int)&this->msg_buf;
-#elif (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
+#elif (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621)
 		*a2 = this->msg_buf;
 #endif	
 	}
 }
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621) 
+#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621) 
 int timestamp::get_talk_type(void **this_obj, void **src, int *a1, int *a2, int* retval)
 #elif CLIENT_VER == 20150000
 int timestamp::get_talk_type(void**this_obj, char** src, int* a1, char** a2, int* retval)
