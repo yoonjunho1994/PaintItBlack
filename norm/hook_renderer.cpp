@@ -51,7 +51,7 @@ bool __fastcall DrawScene_hook(void* this_obj)
 #endif
 }*/
 
-#if (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
+/*#if (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
 DWORD verify_at = 0x00422B98;
 BYTE renderer_verify[] = {  0x8B, 0x0D, 0x68, 0x20, 0xDA, 0x00, 0x8D, 0x45,
 							0xCC, 0x50, 0x57, 0x53, 0xE8, 0xF7, 0xE5, 0x01,
@@ -74,7 +74,7 @@ BYTE renderer_verify[] = {	0x8B, 0x0D, 0x08, 0x6F, 0xE6, 0x00, 0x8D, 0x45,
 							0x00, 0x8B, 0xF8, 0x85, 0xFF, 0x75, 0x22, 0x8B, 
 							0x0D, 0x08, 0x6F, 0xE6, 0x00, 0x8D, 0x45, 0xCC, 
 							0x50, 0xFF, 0x75, 0x2C, 0x53, 0xE8, 0x6E, 0xB4 };
-#endif
+#endif*/
 
 int renderer_detour(std::shared_ptr<norm_dll::norm> c_state_) {
 	LONG err = 0;
@@ -84,7 +84,7 @@ int renderer_detour(std::shared_ptr<norm_dll::norm> c_state_) {
 
 
 #ifdef DRAWSCENE
-	c_state->dbg_sock->do_send("Trying to verify renderer hook for given clientdate ...");
+	/*c_state->dbg_sock->do_send("Trying to verify renderer hook for given clientdate ...");
 	sprintf_s(info_buf, "Size %d", sizeof(renderer_verify));
 	MessageBoxA(0, info_buf, "norm.dll error!", MB_OK);
 	for (int i = 0; i < sizeof(renderer_verify); i++) {
@@ -93,7 +93,7 @@ int renderer_detour(std::shared_ptr<norm_dll::norm> c_state_) {
 			MessageBoxA(0, "Verify Error: 1001", "norm.dll error!", MB_OK);
 			return 0;
 		}
-	}
+	}*/
 	err = DetourAttach(&(LPVOID&)DrawScene_Addr, &DrawScene_hook);
 	CHECK(info_buf, err);
 	if (err == NO_ERROR) {

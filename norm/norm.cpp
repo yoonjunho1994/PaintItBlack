@@ -15,12 +15,14 @@
 #include "mod_overlay_new.h"
 #include "mod_graphics.h"
 
+#include "verifier.h"
+
 #include <winhttp.h>
 
 #pragma comment(lib, "winhttp.lib")
 
 // Installs a mod based on the classname.
-#define INSTALL_MOD(modname)	mods.push_back(std::make_shared<modname>(this));//auto m_##modname = std::make_shared<modname>(this); \
+#define INSTALL_MOD(modname)	mods.push_back(std::make_shared<modname>(this)); //auto m_##modname = std::make_shared<modname>(this); \
 								/* m_##modname->register_hooks(); */ mods.push_back(m_##modname);
 								
 
@@ -63,6 +65,19 @@ void norm::start()
 	sprintf_s(info_buf, "DLL compiled for: %dRE", CLIENT_VER_RE);
 #endif
 	dbg_sock->do_send(info_buf);
+
+	dbg_sock->do_send("Verifying PE compatibility ...");
+	if (strcmp((char*)VERIFY_ADDR, VERIFY_STR) != 0) {
+		dbg_sock->do_send("DLL and PE are not compatibile!");
+#ifdef CLIENT_VER_RE
+		sprintf_s(info_buf, "Client is not compatible with %dRE-norm.dll", CLIENT_VER_RE);
+#else
+		sprintf_s(info_buf, "Client is not compatible with %d-norm.dll", CLIENT_VER_RE);
+#endif
+		MessageBoxA(0, info_buf, "norm.dll error!", MB_OK);
+		return;
+	}
+	dbg_sock->do_send("Success!");
 
 	/* Hook functions. */
 	err = DetourTransactionBegin();

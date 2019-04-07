@@ -120,6 +120,9 @@
     <ClInclude Include="mod_graphics.h">
       <Filter>Headerdateien\mods</Filter>
     </ClInclude>
+    <ClInclude Include="verifier.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
