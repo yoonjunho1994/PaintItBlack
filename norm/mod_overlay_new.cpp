@@ -124,13 +124,6 @@ HRESULT overlay_new::end_scene(IDirect3DDevice7** d3ddevice)
 			sprintf_s(ping_str, "Ping: wait...");
 		else
 			sprintf_s(ping_str, "Ping: %ld ms", ping);
-		/*char test_str[] = "Test text!";
-		for (int x = 0; x < 10; x++) {
-			for (int y = 0; y < 10; y++) {
-				m_pSFastFont->DrawText(test_str, x * 100 + 100, y * 100 + 100, D3DCOLOR_ARGB(255, 255, 255, 0), 0, NULL);
-			}
-		}*/
-		//c_state->dbg_sock->do_send(ping_str);
 
 		m_pSFastFont->DrawText(ping_str, this->x, this->y, D3DCOLOR_ARGB(255, 255, 255, 0), 0, NULL);
 	}

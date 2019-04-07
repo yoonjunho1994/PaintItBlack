@@ -5,7 +5,6 @@
 
 
 static std::shared_ptr<norm_dll::norm> c_state;
-//static std::vector<std::shared_ptr<norm_dll::mod>> GetTalkType_callbacks;
 
 bool GetTalkType_detoured = true;
 int init_ping_calls = 2;
@@ -39,7 +38,7 @@ signed int __fastcall GetTalkType_hook(void *this_obj, DWORD EDX, char *a2, int 
 
 	int cret = 0;
 	int retval = 0;
-	//for (auto callback : GetTalkType_callbacks)
+
 	for (auto callback : c_state->mods)
 		cret += callback->get_talk_type(&this_obj, &a2, &a3, &a4, &retval);
 
@@ -90,18 +89,6 @@ void __fastcall CSession__RecalcAveragePingTime_hook(void* this_obj, DWORD EDX, 
 	if (!initialize_called())
 		original_recalc(this_obj, a1);
 }
-
-
-/*int register_GetTalkType_hook(std::shared_ptr<norm_dll::mod> mod_ptr) {
-#ifdef GETTALKTYPE
-	if (!GetTalkType_detoured)
-		return 0;
-	//GetTalkType_callbacks.push_back(mod_ptr);
-	return 1;
-#else
-	return 0;
-#endif
-}*/
 
 int session_detour(std::shared_ptr<norm_dll::norm> state_) {
 	LONG err = 0;

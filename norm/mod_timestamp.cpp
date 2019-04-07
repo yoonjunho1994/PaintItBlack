@@ -57,10 +57,3 @@ int timestamp::get_talk_type(void**this_obj, char** src, int* a1, char** a2, int
 	}
 	return 0;
 }
-
-/*void timestamp::register_hooks()
-{
-	int res = register_SendMsg_hook(shared_from_this());
-	res += register_GetTalkType_hook(shared_from_this());
-	this->validate(res, 2, __FILE__);
-}*/

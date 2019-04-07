@@ -22,8 +22,7 @@
 #pragma comment(lib, "winhttp.lib")
 
 // Installs a mod based on the classname.
-#define INSTALL_MOD(modname)	mods.push_back(std::make_shared<modname>(this)); //auto m_##modname = std::make_shared<modname>(this); \
-								/* m_##modname->register_hooks(); */ mods.push_back(m_##modname);
+#define INSTALL_MOD(modname)	mods.push_back(std::make_shared<modname>(this));
 								
 
 /* dll class */
@@ -31,9 +30,6 @@ namespace norm_dll {
 
 norm::norm()
 {
-	//dbg_sock->do_send("Releasing norm object");
-	//for (auto it : mods)
-	//	it.reset();
 }
 
 void norm::install_mods()
@@ -51,7 +47,7 @@ void norm::start()
 	char info_buf[256];
 	/* Connect to the debug socket */
 	dbg_sock = std::make_shared<debug_socket>();
-	//c_state = std::make_shared<state>(dbg_sock);
+
 	int err = dbg_sock->do_connect();
 	if (err != 0) {
 		MessageBoxA(0, "Unable to connect to the debug socket!", "norm.dll error!", MB_OK);
