@@ -11,7 +11,7 @@
 	sprintf_s(buf, "Error %d at %s:%d", errno_, __FILE__ ,__LINE__)
 
 /* disable mods by undefining */
-//#define COMENC	/* requires src edit to enable "encryption" on server side. */
+#define COMENC	/* requires src edit to enable "encryption" on server side. */
 #define CHAT_INPUT
 
 #if defined(CLIENT_VER) && defined(CLIENT_VER_RE)

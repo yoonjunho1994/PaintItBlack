@@ -19,6 +19,7 @@ typedef int(__thiscall *UIWindowMgr_SendMsg)(void*, int, int, int, int, int);
 #endif
 
 DWORD get_SendMsg_addr();
+DWORD window_mgr_get_addr();
 
 
 /* Enum definitions from the client */

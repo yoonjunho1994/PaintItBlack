@@ -5,8 +5,6 @@
 
 static std::shared_ptr<norm_dll::norm> c_state;
 
-bool DrawScene_detoured = false;
-
 #if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621 )
 #define DRAWSCENE
 DWORD DrawScene_Addr = 0x0043FA20;
@@ -39,7 +37,6 @@ int renderer_detour(std::shared_ptr<norm_dll::norm> c_state_) {
 	err = DetourAttach(&(LPVOID&)DrawScene_Addr, &DrawScene_hook);
 	CHECK(info_buf, err);
 	if (err == NO_ERROR) {
-		DrawScene_detoured = true;
 		hook_count++;
 	} else
 		c_state->dbg_sock->do_send(info_buf);

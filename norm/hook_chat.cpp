@@ -4,9 +4,7 @@
 #include "detours.h"
 
 static std::shared_ptr<norm_dll::norm> c_state;
-//static std::vector<std::shared_ptr<norm_dll::mod>> SendMsg_callbacks;
-
-bool SendMsg_detoured = false;
+DWORD window_mgr_addr = 0;
 
 #if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621)
 #define SENDMSG
@@ -27,13 +25,19 @@ int __fastcall UIWindowMgr_SendMsg_hook(void* this_obj, DWORD EDX, int a1, int a
 //#endif
 {
 	UIWindowMgr_SendMsg original_sendmsg = (UIWindowMgr_SendMsg)UIWindowMgr_SendMsg_func;
-	if (c_state->g_window_mgr == 0 && a1 == 1)
-		c_state->g_window_mgr = (DWORD)this_obj;
-
+	if (window_mgr_addr == 0 && a1 == 1)
+		window_mgr_addr = (DWORD)this_obj;
+	
 	for (auto callback : c_state->mods)
 		callback->send_msg(&this_obj, &a1, &a2, &a3, &a4, &a5);
 
 	return original_sendmsg(this_obj, a1, a2, a3, a4, a5);
+}
+
+DWORD window_mgr_get_addr()
+{
+	// Not static address, relies on SendMsg_hook
+	return window_mgr_addr;
 }
 
 DWORD get_SendMsg_addr() {
@@ -56,10 +60,9 @@ int chat_detour(std::shared_ptr<norm_dll::norm> state_) {
 #ifdef SENDMSG
 	err = DetourAttach(&(LPVOID&)UIWindowMgr_SendMsg_func, &UIWindowMgr_SendMsg_hook);
 	CHECK(info_buf, err);
-	if (err == NO_ERROR) {
-		SendMsg_detoured = true;
+	if (err == NO_ERROR) 
 		hook_count++;
-	} else 
+	else 
 		c_state->dbg_sock->do_send(info_buf);
 #endif
 
