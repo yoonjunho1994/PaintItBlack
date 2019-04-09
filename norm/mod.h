@@ -19,9 +19,11 @@ public:
 	virtual void send_msg(void**, int*, int*, int*, int*, int*) {}
 	virtual int get_talk_type(void**, char**, int*, char**, int*) { return 0; }
 #endif
+	virtual void Npcack_Mapmove(void**, const char**) {}
+	virtual void Initialize(void**) {}
 	virtual HRESULT begin_scene(IDirect3DDevice7**) { return E_NOTIMPL; }
 	virtual HRESULT end_scene(IDirect3DDevice7**) { return E_NOTIMPL; }
-	virtual HRESULT WaitForVerticalBlank(DWORD*, HANDLE*) { return E_NOTIMPL; };
+	virtual HRESULT WaitForVerticalBlank(DWORD*, HANDLE*) { return E_NOTIMPL; }
 	virtual void ddraw_release() {}
 
 protected:

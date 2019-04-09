@@ -27,7 +27,12 @@ void __fastcall CGameMode__Initialize_hook(void* this_obj, DWORD EDX)
 	c_state->dbg_sock->do_send("CGameMode__Initialize called!");
 	print_time(c_state.get());
 	init_called = true;
+
 	original_init(this_obj);
+
+	for (auto it : c_state->mods)
+		it->Initialize(&this_obj);
+	
 }
 
 #if CLIENT_VER == 20150000
@@ -46,6 +51,22 @@ void __fastcall CGameMode__OnInit_hook(void* this_obj, DWORD EDX, const char * a
 	c_state->dbg_sock->do_send("CGameMode__OnInit called!");
 	print_time(c_state.get());
 	original_oninit(this_obj, a1);
+}
+
+#if CLIENT_VER == 20150000
+#define MAPMOVE	// Does not work when used with debugger. 
+					// Currently not needed by the dll.
+DWORD CGameMode__Zc_Npcack_Mapmove_func = 0x008B67F0;
+#endif
+void __fastcall CGameMode__Zc_Npcack_Mapmove_hook(void* this_obj, DWORD EDX, const char * a1)
+{
+	CGameMode__Zc_Npcack_Mapmove original_mapmove = (CGameMode__Zc_Npcack_Mapmove)CGameMode__Zc_Npcack_Mapmove_func;
+	c_state->dbg_sock->do_send("CGameMode__Zc_Npcack_Mapmove called!");
+	print_time(c_state.get());
+	for (auto it : c_state->mods)
+		it->Npcack_Mapmove(&this_obj, &a1);
+
+	original_mapmove(this_obj, a1);
 }
 
 bool initialize_called()

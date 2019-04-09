@@ -73,13 +73,13 @@ typedef  void(__thiscall *CSession__RecalcAveragePingTime)(void*, unsigned long)
 void __fastcall CSession__RecalcAveragePingTime_hook(void* this_obj, DWORD EDX, unsigned long a1)
 {
 	CSession__RecalcAveragePingTime original_recalc = (CSession__RecalcAveragePingTime)CSession__RecalcAveragePingTime_func;
-	c_state->dbg_sock->do_send("CSession__RecalcAveragePingTime called!");
+	//c_state->dbg_sock->do_send("CSession__RecalcAveragePingTime called!");
 
-	char buf[64];
-	sprintf_s(buf, "Arg: %lu", a1);
-	c_state->dbg_sock->do_send(buf);
+	//char buf[64];
+	//sprintf_s(buf, "Arg: %lu", a1);
+	//c_state->dbg_sock->do_send(buf);
 
-	print_time(c_state.get());
+	//print_time(c_state.get());
 
 	if (init_ping_calls > 0) {
 		init_ping_calls--;

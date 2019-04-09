@@ -195,3 +195,23 @@ void overlay_new::ddraw_release()
 		m_pddsFontTexture = NULL;
 	}
 }
+
+void overlay_new::Npcack_Mapmove(void** this_obj, const char** a1)
+{
+	if (this->display_fps == 1 && this->display_ping == 1) {
+		this->display_fps = 0;
+		this->display_ping = 0;
+		this->old_display_fps = 1;
+		this->old_display_ping = 1;
+		c_state->dbg_sock->do_send("Ping/FPS disabled!");
+	}
+}
+
+void overlay_new::Initialize(void** this_obj)
+{
+	if (this->old_display_fps != 0 && this->old_display_ping != 0) {
+		this->display_fps = 1;
+		this->display_ping = 1;
+		c_state->dbg_sock->do_send("Ping/FPS enabled!");
+	}
+}

@@ -15,6 +15,8 @@ private:
 	int initialized = 0;
 	int display_ping = false;
 	int display_fps = false;
+	int old_display_ping = 0;
+	int old_display_fps = 0;
 	/* postion of the overlay */
 	int x = -1;
 	int y = -1;
@@ -26,5 +28,7 @@ private:
 	int get_talk_type(void**, char**, int*, char**, int*);
 	void draw_scene(void * this_obj);
 	void ddraw_release();
+	void Npcack_Mapmove(void**, const char**);
+	void Initialize(void**);
 };
 
