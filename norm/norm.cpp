@@ -62,17 +62,78 @@ void norm::start()
 #endif
 	dbg_sock->do_send(info_buf);
 
+	//
+	// Checking for compatible client and produce debug message.
+	//
 	dbg_sock->do_send("Verifying PE compatibility ...");
 	if (strcmp((char*)VERIFY_ADDR, VERIFY_STR) != 0) {
+		char error_buf[512];
+		char date_buf[256];
 		dbg_sock->do_send("DLL and PE are not compatibile!");
 #ifdef CLIENT_VER_RE
-		sprintf_s(info_buf, "Client is not compatible with %dRE-norm.dll", CLIENT_VER_RE);
+		sprintf_s(date_buf, "Client is not compatible with %dRE-norm.dll!", CLIENT_VER_RE);
 #else
-		sprintf_s(info_buf, "Client is not compatible with %d-norm.dll", CLIENT_VER);
+		sprintf_s(date_buf, "Client is not compatible with %d-norm.dll!", CLIENT_VER);
 #endif
-		MessageBoxA(0, info_buf, "norm.dll error!", MB_OK);
+		strcat_s(date_buf, "\n\nSeaching for more debug information ...");
+		strcat_s(date_buf, "\nIf the client crashes before any additional output is provided,");
+		strcat_s(date_buf, "\nplease report it!");
+		strcat_s(date_buf, "\n\n Your report should include your client 'exe'.");
+		MessageBoxA(0, date_buf, "norm.dll error!", MB_OK);
+
+		// Search for the real clientdate.
+		// Greedy/dumb search.
+		// TODO: crashes ACCESS VIOLATION if string is not in binary.
+		DWORD search_addr = 0x00401000;
+		for (;;) {
+			if (strncmp("\\RagnarokClient", (char*)search_addr, 15) == 0) {
+
+				// Search the date.
+				DWORD found_addr = search_addr;
+				search_addr--;
+				while ('\\' != ((char*)search_addr)[0])
+					search_addr--;
+
+				int length = found_addr - search_addr - 1;
+				DWORD string_start = search_addr + 4;
+
+				// Search for RE or nonRE
+				search_addr = found_addr;
+				while ('.' != ((char*)search_addr)[0])
+					search_addr++;
+
+				DWORD end = search_addr;
+				while ('\\' != ((char*)search_addr)[0])
+					search_addr--;
+
+				DWORD begin = search_addr + 1;
+				int ragexe_strlen = end - begin + 1;
+
+				char ragexe_str[16];
+				snprintf(ragexe_str, ragexe_strlen, "%s", (char*)begin);
+
+				// Search for the begin of the path.
+				search_addr = found_addr;
+				while (strncmp("D:\\", (char*)search_addr, 3) != 0)
+					search_addr--;
+
+				char* pdb_path = (char*)(search_addr + 3);
+
+				// Create output.
+				char tmp_str[] = "The following information has been found: \n\nClientdate: ";
+				snprintf(error_buf, strlen(tmp_str) + length + 1, "%s%s", tmp_str, (char*)string_start);
+				strncat_s(error_buf, ragexe_str, ragexe_strlen);
+				strcat_s(error_buf, "\nPDB: ");
+				strncat_s(error_buf, pdb_path, strlen(pdb_path) - 4);
+				strcat_s(error_buf, "\n\nIf this debug message does not help you solve your problem then please ");
+				strcat_s(error_buf, "report this message!");
+				MessageBoxA(0, error_buf, "norm.dll error!", MB_OK);
+				break;
+			}
+			search_addr++;
+		}
 		return;
-	}
+}
 	dbg_sock->do_send("Success!");
 
 	/* Hook functions. */
@@ -102,7 +163,7 @@ void norm::start()
 
 	sprintf_s(info_buf, "Total hooks available: %d", total_hooks);
 	dbg_sock->do_send(info_buf);
-	
+
 	//
 	// patching .text section
 	//
@@ -120,7 +181,7 @@ void norm::start()
 	int ret = VirtualProtect(hex_code, 6, 0x04, &old_protect);
 	sprintf_s(info_buf, "VirtualProtect ret val: %d", ret);
 	dbg_sock->do_send(info_buf);
-	
+
 	char hex_code_str[128] = "Changing ASM instructions for ping interval:\n ";
 	char tmp[4];
 	for (int i = 0; i < 6; i++) {
