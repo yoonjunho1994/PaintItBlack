@@ -11,10 +11,15 @@
 	sprintf_s(buf, "Error %d at %s:%d", errno_, __FILE__ ,__LINE__)
 
 /* disable mods by undefining */
-#define COMENC	/* requires src edit to enable "encryption" on server side. */
+//#define COMENC	/* requires src edit to enable "encryption" on server side. */
 #define CHAT_INPUT
 
 #if defined(CLIENT_VER) && defined(CLIENT_VER_RE)
 #undef CLIENT_VER_RE
 #endif
 
+#if CLIENT_VER == 20180621
+#define DLL_VER "RO_2018-06-21Ragexe"
+#elif CLIENT_VER == 20150000
+#define DLL_VER "Einherjar"
+#endif

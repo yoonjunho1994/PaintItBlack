@@ -8,6 +8,7 @@
 #include "hook_session.h"
 #include "hook_dx.h"
 #include "hook_gamemode.h"
+#include "hook_user32.h"
 
 #include "mod_overlay.h"
 #include "mod_statistics.h"
@@ -125,6 +126,8 @@ void norm::start()
 				strncat_s(error_buf, ragexe_str, ragexe_strlen);
 				strcat_s(error_buf, "\nPDB: ");
 				strncat_s(error_buf, pdb_path, strlen(pdb_path) - 4);
+				strcat_s(error_buf, "\nDLL: ");
+				strcat_s(error_buf, DLL_VER);
 				strcat_s(error_buf, "\n\nIf this debug message does not help you solve your problem then please ");
 				strcat_s(error_buf, "report this message!");
 				MessageBoxA(0, error_buf, "norm.dll error!", MB_OK);
@@ -145,7 +148,9 @@ void norm::start()
 	CHECK(info_buf, err);
 	dbg_sock->do_send(info_buf);
 
-	// attach hooks and install mods
+	//
+	// Attach hooks and install mods
+	//
 	int total_hooks = 0;
 	auto sptr = shared_from_this();
 	total_hooks += chat_detour(sptr);
@@ -154,6 +159,7 @@ void norm::start()
 	total_hooks += session_detour(sptr);
 	total_hooks += dx_detour(sptr);
 	total_hooks += gamemode_detour(sptr);
+	total_hooks += user32_detour(sptr);
 
 	this->install_mods();
 

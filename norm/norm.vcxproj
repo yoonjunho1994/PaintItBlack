@@ -163,6 +163,7 @@
     <ClInclude Include="detours.h" />
     <ClInclude Include="hook_dx.h" />
     <ClInclude Include="hook_session.h" />
+    <ClInclude Include="hook_user32.h" />
     <ClInclude Include="mod.h" />
     <ClInclude Include="mod_graphics.h" />
     <ClInclude Include="mod_overlay_new.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="hook_dx.cpp" />
     <ClCompile Include="hook_gamemode.cpp" />
     <ClCompile Include="hook_session.cpp" />
+    <ClCompile Include="hook_user32.cpp" />
     <ClCompile Include="mod.cpp" />
     <ClCompile Include="mod_graphics.cpp" />
     <ClCompile Include="mod_overlay_new.cpp" />

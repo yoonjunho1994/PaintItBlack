@@ -123,6 +123,9 @@
     <ClInclude Include="verifier.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="hook_user32.h">
+      <Filter>Headerdateien\hooks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -193,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="mod_graphics.cpp">
       <Filter>Quelldateien\mods</Filter>
+    </ClCompile>
+    <ClCompile Include="hook_user32.cpp">
+      <Filter>Quelldateien\hooks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
