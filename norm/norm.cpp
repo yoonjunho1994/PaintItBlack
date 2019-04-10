@@ -95,8 +95,8 @@ void norm::start()
 				while ('\\' != ((char*)search_addr)[0])
 					search_addr--;
 
-				int length = found_addr - search_addr - 1;
-				DWORD string_start = search_addr + 4;
+				int length = found_addr - search_addr - 1 - RO_offset;
+				DWORD string_start = search_addr + 1 + RO_offset;
 
 				// Search for RE or nonRE
 				search_addr = found_addr;

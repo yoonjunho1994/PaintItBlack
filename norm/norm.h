@@ -4,6 +4,7 @@
 #include "debug_socket.h"
 #include "mod.h"
 namespace norm_dll {
+constexpr auto RO_offset = 3; /* RO_2018-.... removes RO_*/
 
 class norm : public std::enable_shared_from_this<norm> {
 	public:
