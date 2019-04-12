@@ -1,6 +1,8 @@
+#include "stdafx.h"
+
 #include "hook_socket.h"
 #include "detours.h"
-#include "stdafx.h"
+
 
 #pragma warning(disable : 26440) // Suppress "noexcept" warning
 

@@ -1,6 +1,8 @@
-#include "debug_socket.h"
-#include "client_ver.h"
 #include "stdafx.h"
+
+#include "client_ver.h"
+#include "debug_socket.h"
+
 #include <ws2tcpip.h>
 
 // Need to link with Ws2_32.lib, Mswsock.lib, and Advapi32.lib
