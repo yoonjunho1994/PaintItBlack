@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "CacheInfo.h"
+#include <CppCoreCheck\Warnings.h>
+#pragma warning(disable: ALL_CPPCORECHECK_WARNINGS)
 
 CacheInfo::CacheInfo(int HashRootTables)
 {

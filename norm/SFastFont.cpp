@@ -1,5 +1,7 @@
 ﻿#include "stdafx.h"
 #include "SFastFont.h"
+#include <CppCoreCheck\Warnings.h>
+#pragma warning(disable: ALL_CPPCORECHECK_WARNINGS)
 
 //#define defDebugLog
 

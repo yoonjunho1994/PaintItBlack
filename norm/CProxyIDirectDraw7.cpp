@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "CProxyIDirectDraw7.h"
 
-
 CProxyIDirectDraw7* CProxyIDirectDraw7::lpthis;
 
 HRESULT CProxyIDirectDraw7::Proxy_WaitForVerticalBlank(DWORD dwFlags, HANDLE hEvent)

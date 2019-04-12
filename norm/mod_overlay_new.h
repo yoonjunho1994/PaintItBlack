@@ -20,8 +20,8 @@ private:
 	int y = -1;
 
 	void init(IDirect3DDevice7* d3ddevice);
-	LPDIRECTDRAWSURFACE7 m_pddsFontTexture;
-	CSFastFont *m_pSFastFont;
+	LPDIRECTDRAWSURFACE7 m_pddsFontTexture = nullptr;
+	CSFastFont *m_pSFastFont = nullptr;
 	int get_talk_type(void**, void**, int*, int*, int*);
 	int get_talk_type(void**, char**, int*, char**, int*);
 	void draw_scene(void * this_obj);

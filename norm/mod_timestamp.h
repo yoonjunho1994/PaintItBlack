@@ -13,6 +13,6 @@ public:
 
 private:
 	int enabled = 1;
-	char msg_buf[256];
+	char msg_buf[256] = { 0 };
 };
 

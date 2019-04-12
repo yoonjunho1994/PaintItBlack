@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "FastFont.h"
+#include <CppCoreCheck\Warnings.h>
+#pragma warning(disable: ALL_CPPCORECHECK_WARNINGS)
 
 CFastFont::CFastFont()
 {

@@ -16,3 +16,8 @@ Debug/norm.lib
 *.iobj
 Release/norm.lib
 *.opendb
+*.xml
+*.codeanalysisast
+*.pchast
+/packages/Microsoft.Gsl.0.1.2.1
+*.lastcodeanalysissucceeded

@@ -3,6 +3,7 @@
 #include "hook_gamemode.h"
 #include "detours.h"
 
+#pragma warning(disable: 26440) // Suppress "noexcept" warning
 
 static std::shared_ptr<norm_dll::norm> c_state;
 

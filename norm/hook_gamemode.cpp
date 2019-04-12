@@ -5,6 +5,8 @@
 
 #include <chrono>
 
+#pragma warning(disable: 26440) // Suppress "noexcept" warning
+
 using namespace std::chrono;
 
 static std::shared_ptr<norm_dll::norm> c_state;

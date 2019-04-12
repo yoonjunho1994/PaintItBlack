@@ -2,6 +2,8 @@
 #include "hook_user32.h"
 #include "detours.h"
 
+#pragma warning(disable: 26440) // Suppress "noexcept" warning
+
 /* debug */
 static std::shared_ptr<norm_dll::norm> c_state;
 char title[128];

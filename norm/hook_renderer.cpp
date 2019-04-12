@@ -3,6 +3,8 @@
 #include "detours.h"
 #include <vector>
 
+#pragma warning(disable: 26440) // Suppress "noexcept" warning
+
 static std::shared_ptr<norm_dll::norm> c_state;
 
 #if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621 )
