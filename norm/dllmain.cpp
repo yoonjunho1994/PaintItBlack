@@ -9,7 +9,7 @@ BOOL __declspec(dllexport) WINAPI  DllMain(HMODULE hModule, DWORD dwReason, LPVO
 	// store the address of sum() in testprogram.exe here.
 	if (dwReason == DLL_PROCESS_ATTACH)
 	{
-		norm_ptr = std::make_shared<norm_dll::norm>();
+		norm_ptr = std::make_shared<norm_dll::norm>((HINSTANCE)hModule);
 		norm_ptr->start();
 	}
 	else if (dwReason == DLL_PROCESS_DETACH)

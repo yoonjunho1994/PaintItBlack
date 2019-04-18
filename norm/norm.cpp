@@ -2,6 +2,8 @@
 
 #include "detours.h"
 #include "norm.h"
+#include "verifier.h"
+#include "resource.h"
 
 #include "hook_chat.h"
 #include "hook_dx.h"
@@ -17,8 +19,7 @@
 #include "mod_statistics.h"
 #include "mod_timestamp.h"
 
-#include "verifier.h"
-
+#include <tchar.h>
 #include <winhttp.h>
 
 #pragma comment(lib, "winhttp.lib")
@@ -29,7 +30,8 @@
 /* dll class */
 namespace norm_dll {
 
-norm::norm()
+norm::norm(HINSTANCE hInst)
+    : hInst(hInst)
 {
 }
 
@@ -45,6 +47,11 @@ void norm::install_mods()
 
 void norm::start()
 {
+	//
+	// Display splash screen
+	//
+    this->show_splash();
+
     char info_buf[256];
     /* Connect to the debug socket */
     dbg_sock = std::make_shared<debug_socket>();
@@ -63,81 +70,8 @@ void norm::start()
 #endif
     dbg_sock->do_send(info_buf);
 
-    //
-    // Checking for compatible client and produce debug message.
-    //
-    dbg_sock->do_send("Verifying PE compatibility ...");
-    if (strcmp((char*)VERIFY_ADDR, VERIFY_STR) != 0) {
-        char error_buf[512];
-        char date_buf[256];
-        dbg_sock->do_send("DLL and PE are not compatibile!");
-#ifdef CLIENT_VER_RE
-        sprintf_s(date_buf, "Client is not compatible with %dRE-norm.dll!", CLIENT_VER_RE);
-#else
-        sprintf_s(date_buf, "Client is not compatible with %d-norm.dll!", CLIENT_VER);
-#endif
-        strcat_s(date_buf, "\n\nSeaching for more debug information ...");
-        strcat_s(date_buf, "\nIf the client crashes before any additional output is provided,");
-        strcat_s(date_buf, "\nplease report it!");
-        strcat_s(date_buf, "\n\n Your report should include your client 'exe'.");
-        MessageBoxA(0, date_buf, "norm.dll error!", MB_OK);
-
-        // Search for the real clientdate.
-        // Greedy/dumb search.
-        // TODO: crashes ACCESS VIOLATION if string is not in binary.
-        DWORD search_addr = 0x00401000;
-        for (;;) {
-            if (strncmp("\\RagnarokClient", (char*)search_addr, 15) == 0) {
-
-                // Search the date.
-                DWORD found_addr = search_addr;
-                search_addr--;
-                while ('\\' != ((char*)search_addr)[0])
-                    search_addr--;
-
-                int length = found_addr - search_addr - 1 - RO_offset;
-                DWORD string_start = search_addr + 1 + RO_offset;
-
-                // Search for RE or nonRE
-                search_addr = found_addr;
-                while ('.' != ((char*)search_addr)[0])
-                    search_addr++;
-
-                DWORD end = search_addr;
-                while ('\\' != ((char*)search_addr)[0])
-                    search_addr--;
-
-                DWORD begin = search_addr + 1;
-                int ragexe_strlen = end - begin + 1;
-
-                char ragexe_str[16];
-                snprintf(ragexe_str, ragexe_strlen, "%s", (char*)begin);
-
-                // Search for the begin of the path.
-                search_addr = found_addr;
-                while (strncmp("D:\\", (char*)search_addr, 3) != 0)
-                    search_addr--;
-
-                char* pdb_path = (char*)(search_addr + 3);
-
-                // Create output.
-                char tmp_str[] = "The following information has been found: \n\nClientdate: ";
-                snprintf(error_buf, strlen(tmp_str) + length + 1, "%s%s", tmp_str, (char*)string_start);
-                strncat_s(error_buf, ragexe_str, ragexe_strlen);
-                strcat_s(error_buf, "\nPDB: ");
-                strncat_s(error_buf, pdb_path, strlen(pdb_path) - 4);
-                strcat_s(error_buf, "\nDLL: ");
-                strcat_s(error_buf, DLL_VER);
-                strcat_s(error_buf, "\n\nIf this debug message does not help you solve your problem then please ");
-                strcat_s(error_buf, "report this message!");
-                MessageBoxA(0, error_buf, "norm.dll error!", MB_OK);
-                break;
-            }
-            search_addr++;
-        }
-        return;
-    }
-    dbg_sock->do_send("Success!");
+	/* Verify client date. */
+    this->verify_client();
 
     /* Hook functions. */
     err = DetourTransactionBegin();
@@ -210,6 +144,110 @@ void norm::start()
     ret = VirtualProtect(hex_code, 6, old_protect, &old_reset_protect);
     sprintf_s(info_buf, "VirtualProtect reset ret val: %d", ret);
     dbg_sock->do_send(info_buf);
+}
+
+void norm::verify_client()
+{
+    //
+    // Checking for compatible client and produce debug message.
+    //
+    this->dbg_sock->do_send("Verifying PE compatibility ...");
+    if (strcmp((char*)VERIFY_ADDR, VERIFY_STR) != 0) {
+        char error_buf[512];
+        char date_buf[256];
+        this->dbg_sock->do_send("DLL and PE are not compatibile!");
+#ifdef CLIENT_VER_RE
+        sprintf_s(date_buf, "Client is not compatible with %dRE-norm.dll!", CLIENT_VER_RE);
+#else
+        sprintf_s(date_buf, "Client is not compatible with %d-norm.dll!", CLIENT_VER);
+#endif
+        strcat_s(date_buf, "\n\nSeaching for more debug information ...");
+        strcat_s(date_buf, "\nIf the client crashes before any additional output is provided,");
+        strcat_s(date_buf, "\nplease report it!");
+        strcat_s(date_buf, "\n\n Your report should include your client 'exe'.");
+        MessageBoxA(0, date_buf, "norm.dll error!", MB_OK);
+
+        // Search for the real clientdate.
+        // Greedy/dumb search.
+        // TODO: crashes ACCESS VIOLATION if string is not in binary.
+        DWORD search_addr = 0x00401000;
+        for (;;) {
+            if (strncmp("\\RagnarokClient", (char*)search_addr, 15) == 0) {
+
+                // Search the date.
+                DWORD found_addr = search_addr;
+                search_addr--;
+                while ('\\' != ((char*)search_addr)[0])
+                    search_addr--;
+
+                int length = found_addr - search_addr - 1 - RO_offset;
+                DWORD string_start = search_addr + 1 + RO_offset;
+
+                // Search for RE or nonRE
+                search_addr = found_addr;
+                while ('.' != ((char*)search_addr)[0])
+                    search_addr++;
+
+                DWORD end = search_addr;
+                while ('\\' != ((char*)search_addr)[0])
+                    search_addr--;
+
+                DWORD begin = search_addr + 1;
+                int ragexe_strlen = end - begin + 1;
+
+                char ragexe_str[16];
+                snprintf(ragexe_str, ragexe_strlen, "%s", (char*)begin);
+
+                // Search for the begin of the path.
+                search_addr = found_addr;
+                while (strncmp("D:\\", (char*)search_addr, 3) != 0)
+                    search_addr--;
+
+                char* pdb_path = (char*)(search_addr + 3);
+
+                // Create output.
+                char tmp_str[] = "The following information has been found: \n\nClientdate: ";
+                snprintf(error_buf, strlen(tmp_str) + length + 1, "%s%s", tmp_str, (char*)string_start);
+                strncat_s(error_buf, ragexe_str, ragexe_strlen);
+                strcat_s(error_buf, "\nPDB: ");
+                strncat_s(error_buf, pdb_path, strlen(pdb_path) - 4);
+                strcat_s(error_buf, "\nDLL: ");
+                strcat_s(error_buf, DLL_VER);
+                strcat_s(error_buf, "\n\nIf this debug message does not help you solve your problem then please ");
+                strcat_s(error_buf, "report this message!");
+                MessageBoxA(0, error_buf, "norm.dll error!", MB_OK);
+                break;
+            }
+            search_addr++;
+        }
+        return;
+    }
+    this->dbg_sock->do_send("Success!");
+}
+
+void norm::hide_splash()
+{
+    logo.Hide();
+    pib.Hide();
+}
+
+void norm::show_splash()
+{
+    int offset = 0;
+    HBITMAP bmp_logo = (HBITMAP)::LoadImage(NULL, _T("logo.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+    if (bmp_logo) {
+        HWND hWnd_logo = ::CreateWindowA("STATIC", "splash", WS_POPUP, (GetSystemMetrics(SM_CXSCREEN) / 2) + splash_offset, (GetSystemMetrics(SM_CYSCREEN) / 2), 0, 0, NULL, NULL, NULL, NULL);
+        this->logo.Init(hWnd_logo, this->hInst, bmp_logo);
+        offset = -splash_offset - 1;
+    }
+
+	HWND hWnd_pib = ::CreateWindowA("STATIC", "splash", WS_POPUP, (GetSystemMetrics(SM_CXSCREEN) / 2) + offset, (GetSystemMetrics(SM_CYSCREEN) / 2), 0, 0, NULL, NULL, NULL, NULL);
+    auto bmp_pib = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP1));
+    this->pib.Init(hWnd_pib, this->hInst, bmp_pib);
+	
+	this->pib.Show();
+    this->logo.Show();
+    Sleep(1000); // Display the logo for atleast 1 second.
 }
 
 norm::~norm()

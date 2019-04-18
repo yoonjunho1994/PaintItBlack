@@ -126,6 +126,12 @@
     <ClInclude Include="hook_user32.h">
       <Filter>Headerdateien\hooks</Filter>
     </ClInclude>
+    <ClInclude Include="splash.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -200,9 +206,22 @@
     <ClCompile Include="hook_user32.cpp">
       <Filter>Quelldateien\hooks</Filter>
     </ClCompile>
+    <ClCompile Include="splash.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Ressourcendateien</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="pib_logo.bmp">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
   </ItemGroup>
 </Project>

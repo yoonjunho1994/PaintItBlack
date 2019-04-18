@@ -21,6 +21,7 @@ HRESULT(WINAPI *pDirectDrawCreateEx)(GUID *lpGuid, LPVOID *lplpDD, const IID &ii
 HRESULT WINAPI DirectDrawCreateEx_hook(GUID *lpGuid, LPVOID *lplpDD, const IID &iid, IUnknown *pUnkOuter)
 {
 	c_state->dbg_sock->do_send("DirectDrawCreateEx called!");
+    c_state->hide_splash();
 
 	//HRESULT Result = ((pDirectDrawCreateEx)DirectDrawCreateEx_addr)(lpGuid, lplpDD, iid, pUnkOuter);
 	HRESULT Result = pDirectDrawCreateEx(lpGuid, lplpDD, iid, pUnkOuter);
@@ -30,6 +31,7 @@ HRESULT WINAPI DirectDrawCreateEx_hook(GUID *lpGuid, LPVOID *lplpDD, const IID &
 	*lplpDD = lpcDD = new CProxyIDirectDraw7((IDirectDraw7*)*lplpDD, c_state);
 	lpcDD->setThis(lpcDD);
 	c_state->dbg_sock->do_send("DirectDrawCreateEx called! Fin");
+    
 	return Result;
 }
 
