@@ -1,0 +1,53 @@
+image: Visual Studio 2017
+# This is the default location, but we put it here for safety reasons, since we use it in our test script
+clone_folder: c:\projects\pib
+# We do not need the git history for our integration tests
+clone_depth: 50
+init:
+  - ps: Update-AppveyorBuild -Version "$(Get-Date -format yy.M.dd)-$($env:appveyor_repo_commit.substring(0,7))"
+
+pull_requests:
+  do_not_increment_build_number: true
+environment:
+  matrix:
+  - DEPLOY_NAME: "20180621"
+    Defines: 'CLIENT_VER=20180621'
+    
+  - DEPLOY_NAME: "20180620"
+    Defines: 'CLIENT_VER=20180620'
+    
+  - DEPLOY_NAME: "20180621RE"
+    Defines: 'CLIENT_VER_RE=20180621'
+  
+  - DEPLOY_NAME: "20150000"
+    Defines: 'CLIENT_VER=20150000'
+    
+platform:
+  - x86
+configuration:
+  - Release
+artifacts:
+  - path: \*.zip
+    name: COMPILED_DLL
+matrix:
+  fast_finish: true
+
+before_build:
+  - nuget restore
+build_script:
+- cmd: msbuild norm_release.sln /p:DefineConstants="%Defines%;DLL_RELEASE=%APPVEYOR_BUILD_VERSION%"
+after_build:
+- 7z a %DEPLOY_NAME%.zip %APPVEYOR_BUILD_FOLDER%\Release\norm.dll
+
+deploy:
+  release: v$(appveyor_build_version)
+  description: '#### New clientdates:\n- {fill}\n#### Additional Features:\n- {fill}\n#### Fixes:\n- {fill}\n\nMore details can be found on the rAthena release post.\nInternal Version: %APPVEYOR_BUILD_VERSION%'
+  provider: GitHub
+  auth_token:
+    secure: Qpaa1sW/FtJtWOc/Uue5oV0NStzbD6p6AAeqjy3TgG3jehpPQ+ophboT9BR9rpfK # your encrypted token from GitHub
+  artifact: COMPILED_DLL
+  draft: true
+  prerelease: false
+  force_update: true
+  on:
+      branch: master
