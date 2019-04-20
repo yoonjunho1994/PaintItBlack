@@ -34,8 +34,11 @@ int user32_detour(std::shared_ptr<norm_dll::norm> state_)
 
     err = DetourAttach(&(LPVOID&)pCreateWindowExA, &CreateWindowExA_hook);
     CHECK(info_buf, err);
+
+	// DEBUG
     //sprintf_s(info_buf, "%x", pCreateWindowExA);
     //c_state->dbg_sock->do_send(info_buf);
+
     if (err == NO_ERROR) {
         hook_count++;
     } else
