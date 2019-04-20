@@ -11,7 +11,7 @@ static std::shared_ptr<norm_dll::norm> c_state;
 
 // Search for: 3dlib\\Renderer.cpp
 #if CLIENT_VER == 20180919
-DrawScene_Addr = 0x0043FB70;
+DWORD DrawScene_Addr = 0x0043FB70;
 
 #elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620 || CLIENT_VER_RE == 20180621)
 DWORD DrawScene_Addr = 0x0043FA20;
