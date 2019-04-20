@@ -139,7 +139,7 @@ HRESULT overlay_new::end_scene(IDirect3DDevice7** d3ddevice)
 	return S_OK;
 }
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621) 
+#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
 int overlay_new::get_talk_type(void **this_obj, void **src, int *a1, int *a2, int* retval)
 #elif CLIENT_VER == 20150000
 int overlay_new::get_talk_type(void**this_obj, char** src, int* a1, char** a2, int* retval)
@@ -178,7 +178,7 @@ void overlay_new::draw_scene(void* this_obj)
 		c_state->dbg_sock->do_send("Trying to get screen size!");
 		int screen_width = (int)renderer_get_width();
 		int screen_height = (int)renderer_get_height();
-		this->x = (int)(screen_width - 115);
+		this->x = (int)(screen_width - 145);
 		this->y = (int)(screen_height - (screen_height - 160));
 		char buf[32];
 		sprintf_s(buf, "Width: %d | Height: %d", screen_width, screen_height);

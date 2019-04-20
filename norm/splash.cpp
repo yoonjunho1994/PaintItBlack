@@ -19,7 +19,7 @@ void splash::Init(HWND hWnd, HINSTANCE hInst, HBITMAP bmp)
         WS_POPUP | SS_BITMAP, 0, 0, 0, 0, hWnd, NULL, hInst, NULL);
     //HBITMAP bmp = (HBITMAP)::LoadImage(NULL, _T("logo.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
     //auto bmp = LoadBitmap(hInst, MAKEINTRESOURCE(resid));
-    SetLayeredWindowAttributes(hSplashWnd, RGB(66, 66, 66), 0, LWA_COLORKEY);
+    SetLayeredWindowAttributes(hSplashWnd, RGB(0xff, 0x0, 0xff), 0, LWA_COLORKEY);
     SendMessage(hSplashWnd, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmp);
     this->SHOWING = FALSE;
 }

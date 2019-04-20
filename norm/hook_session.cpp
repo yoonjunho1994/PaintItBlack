@@ -14,12 +14,14 @@ int init_ping_calls = 2;
  * Search for:
  * /goldpc
  */
-#if  (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621)
+#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
 #define GETTALKTYPE
 #if CLIENT_VER_RE == 20180621
 DWORD GetTalkType_func = 0x00AC7D90;
-#else
+#elif (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
 DWORD GetTalkType_func = 0x00A0CF40;
+#elif CLIENT_VER == 20180919
+DWORD GetTalkType_func = 0x00A0EC10;
 #endif
 typedef int(__thiscall *GetTalkType)(void*, void*, int, int);
 
@@ -61,12 +63,14 @@ signed int __fastcall GetTalkType_hook(void *this_obj, DWORD EDX, char *a2, int 
 #define RECALCPING
 DWORD CSession__RecalcAveragePingTime_func = 0x00935560;
 typedef  void(__thiscall *CSession__RecalcAveragePingTime)(void*, unsigned long);
-#elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620 || CLIENT_VER_RE == 20180621)
+#elif ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
 #define RECALCPING
 #if CLIENT_VER_RE == 20180621
 DWORD CSession__RecalcAveragePingTime_func = 0x00ADA470;
-#else
+#elif (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
 DWORD CSession__RecalcAveragePingTime_func = 0x00A1F510;
+#elif CLIENT_VER == 20180919
+DWORD CSession__RecalcAveragePingTime_func = 0x00A212D0;
 #endif
 typedef  void(__thiscall *CSession__RecalcAveragePingTime)(void*, unsigned long);
 #endif
@@ -125,7 +129,9 @@ int session_detour(std::shared_ptr<norm_dll::norm> state_) {
 
 DWORD session_get_addr()
 {
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
+#if CLIENT_VER == 20180919
+    return 0x010178D0;
+#elif (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
 	return 0x010130C8;
 #elif CLIENT_VER_RE == 20180621
 	return 0x010D7F58;
@@ -136,7 +142,7 @@ DWORD session_get_addr()
 
 ULONG session_get_averagePingTime()
 {
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621)
+#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
 	return *(ULONG*)(session_get_addr() + 0x630);
 #endif
 #if CLIENT_VER == 20150000

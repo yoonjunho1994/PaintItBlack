@@ -8,11 +8,14 @@
 static std::shared_ptr<norm_dll::norm> c_state;
 DWORD window_mgr_addr = 0;
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621)
+// Search for: )  *^_^*
+#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
 #define SENDMSG
 #if CLIENT_VER_RE == 20180621
 DWORD UIWindowMgr_SendMsg_func = 0x00720AC0;
-#else
+#elif CLIENT_VER == 20180919
+DWORD UIWindowMgr_SendMsg_func = 0x00720610;
+#elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
 DWORD UIWindowMgr_SendMsg_func = 0x0071ED80;
 #endif
 int __fastcall UIWindowMgr_SendMsg_hook(void* this_obj, DWORD EDX, int a1, void* a2, void* a3, int a4, int a5)
@@ -43,7 +46,9 @@ DWORD window_mgr_get_addr()
 }
 
 DWORD get_SendMsg_addr() {
-#if  (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
+#if CLIENT_VER == 20180919
+    return 0x00720610;
+#elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
 	return 0x0071ED80;
 #elif CLIENT_VER == 20150000
 	return 0x005F4CA0;

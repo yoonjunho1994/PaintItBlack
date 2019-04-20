@@ -10,6 +10,9 @@ pull_requests:
   do_not_increment_build_number: true
 environment:
   matrix:
+  - DEPLOY_NAME: "20180919"
+    Defines: 'CLIENT_VER=20180919'
+    
   - DEPLOY_NAME: "20180621"
     Defines: 'CLIENT_VER=20180621'
     

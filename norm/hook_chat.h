@@ -12,7 +12,7 @@
 /* hooks all available functions. */
 int chat_detour(std::shared_ptr<norm_dll::norm> c_state);
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621)
+#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
 typedef int(__thiscall *UIWindowMgr_SendMsg)(void*, int, void*, void*, int, int);
 #elif CLIENT_VER == 20150000
 typedef int(__thiscall *UIWindowMgr_SendMsg)(void*, int, int, int, int, int);

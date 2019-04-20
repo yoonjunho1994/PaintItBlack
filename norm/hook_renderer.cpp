@@ -7,7 +7,11 @@
 
 static std::shared_ptr<norm_dll::norm> c_state;
 
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER_RE == 20180621 )
+// Search for: 3dlib\\Renderer.cpp
+#if CLIENT_VER == 20180919
+#define DRAWSCENE
+DWORD DrawScene_Addr = 0x0043FB70;
+#elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620 || CLIENT_VER_RE == 20180621)
 #define DRAWSCENE
 DWORD DrawScene_Addr = 0x0043FA20;
 #elif CLIENT_VER == 20150000
@@ -49,10 +53,13 @@ int renderer_detour(std::shared_ptr<norm_dll::norm> c_state_) {
 	return hook_count;
 }
 
+// Search for: http://admtools.gnjoy.com/gamestarter/devro.asp?GameCode=6011
 DWORD renderer_get_addr()
 {
 #if CLIENT_VER_RE == 20180621
 	return 0x00E66F08;
+#elif CLIENT_VER == 20180919
+    return 0x00DA6D00;
 #elif (CLIENT_VER == 20180620 || CLIENT_VER == 20180621)
 	return 0x00DA2068;
 #elif CLIENT_VER == 20150000
@@ -63,7 +70,7 @@ DWORD renderer_get_addr()
 
 ULONG renderer_get_width()
 {
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER == 20150000 || CLIENT_VER_RE == 20180621)
+#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20150000) || CLIENT_VER_RE == 20180621)
 	return *(ULONG*)(*(DWORD*)(renderer_get_addr()) + 0x24);
 #endif
 	return -1;
@@ -71,7 +78,7 @@ ULONG renderer_get_width()
 
 ULONG renderer_get_height()
 {
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER == 20150000 || CLIENT_VER_RE == 20180621)
+#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20150000) || CLIENT_VER_RE == 20180621)
 	return  *(ULONG*)(*(DWORD*)(renderer_get_addr()) + 0x28);
 #endif
 	return -1;
@@ -79,7 +86,7 @@ ULONG renderer_get_height()
 
 int renderer_get_fps()
 {
-#if (CLIENT_VER == 20180620 || CLIENT_VER == 20180621 || CLIENT_VER == 20150000 || CLIENT_VER_RE == 20180621)
+#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20150000) || CLIENT_VER_RE == 20180621)
 	return *(int*)(*(DWORD*)(renderer_get_addr()) + 0x44);
 #endif
 	return -1;

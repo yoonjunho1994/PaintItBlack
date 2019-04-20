@@ -223,5 +223,8 @@
     <Image Include="pib_logo.bmp">
       <Filter>Ressourcendateien</Filter>
     </Image>
+    <Image Include="pib_logo2.bmp">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
   </ItemGroup>
 </Project>
