@@ -283,12 +283,13 @@ bool norm::check_cheat_defender()
     this->dbg_sock->do_send(info_buf);
 
 	if (str_hash != 0x2a4bd5ce) {
-        char err_buf[256];
-        strcat_s(err_buf, "Detected Cheat-Defender!\n\n");
+        char err_buf[512];
+        sprintf_s(err_buf, "Detected Cheat-Defender!\n\n");
         strcat_s(err_buf, "The found file is not compatible.\n");
         strcat_s(err_buf, "Please use a dropin replacement! It can be found here:\n\n");
         strcat_s(err_buf, "https://rathena.org/board/topic/118729-client-mods-paint-it-black/\nor\n");
-        strcat_s(err_buf, "https://gitlab.com/4144/Nemo/blob/master/Input/CDClient.dll");
+        strcat_s(err_buf, "https://gitlab.com/4144/Nemo/blob/master/Input/CDClient.dll\n\n");
+        strcat_s(err_buf, "SHA-1: 32158C097CD656FF62BB094CF9F4F2BF1A6B1CAD");
         MessageBoxA(0, err_buf, "norm.dll error!", MB_OK);
         return false;
     }
