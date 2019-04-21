@@ -13,7 +13,11 @@ private:
 
 public:
 
-	CProxyIDirect3DDevice7(IDirect3DDevice7* ptr, IDirectDrawSurface7* psf, std::shared_ptr<norm_dll::norm> c_state) : m_Instance(ptr), TargetSurface(psf), c_state(c_state) { c_state->dbg_sock->do_send("CProxyIDirect3DDevice7 const"); }
+	CProxyIDirect3DDevice7(IDirect3DDevice7* ptr, IDirectDrawSurface7* psf, std::shared_ptr<norm_dll::norm> c_state) : m_Instance(ptr), TargetSurface(psf), c_state(c_state) 
+	{ 
+		c_state->dbg_sock->do_send("CProxyIDirect3DDevice7 const"); 
+		c_state->hide_splash();
+	}
 
 	/*** IUnknown methods ***/
 	STDMETHOD(QueryInterface)(THIS_ REFIID p1, LPVOID * p2) PROXY2(QueryInterface)

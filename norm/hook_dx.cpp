@@ -14,7 +14,6 @@ HRESULT(WINAPI *pDirectDrawCreateEx)(GUID *lpGuid, LPVOID *lplpDD, const IID &ii
 HRESULT WINAPI DirectDrawCreateEx_hook(GUID *lpGuid, LPVOID *lplpDD, const IID &iid, IUnknown *pUnkOuter)
 {
 	c_state->dbg_sock->do_send("DirectDrawCreateEx called!");
-    c_state->hide_splash();
 
 	HRESULT Result = pDirectDrawCreateEx(lpGuid, lplpDD, iid, pUnkOuter);
 	if (FAILED(Result))

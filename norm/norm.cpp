@@ -159,8 +159,7 @@ bool norm::verify_client()
     //
     this->dbg_sock->do_send("Verifying PE compatibility ...");
     if (strcmp((char*)VERIFY_ADDR, VERIFY_STR) != 0) {
-        char error_buf[512];
-        char date_buf[256];
+        char date_buf[512];
         this->dbg_sock->do_send("DLL and PE are not compatibile!");
 #ifdef CLIENT_VER_RE
         sprintf_s(date_buf, "Client is not compatible with %dRE-norm.dll!", CLIENT_VER_RE);
@@ -170,6 +169,7 @@ bool norm::verify_client()
         strcat_s(date_buf, "\n\nSeaching for more debug information ...");
         strcat_s(date_buf, "\nIf the client crashes before any additional output is provided,");
         strcat_s(date_buf, "\nplease report it!");
+        strcat_s(date_buf, "\nNOTE: Not compatible with NEMO Hide build info in client!");
         strcat_s(date_buf, "\n\n Your report should include your client 'exe'.");
         //strcat_s(date_buf, "\n Note: nemo patch 'Hide build info' is currently not supported!");
         MessageBoxA(0, date_buf, "norm.dll error!", MB_OK);
@@ -180,6 +180,7 @@ bool norm::verify_client()
         DWORD search_addr = 0x00401000;
         for (;;) {
             if (strncmp("\\RagnarokClient", (char*)search_addr, 15) == 0) {
+                char error_buf[512];
 
                 // Search the date.
                 DWORD found_addr = search_addr;
