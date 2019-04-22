@@ -1,9 +1,12 @@
-//TODO write a description for this script
-//@author 
-//@category _NEW_
+//This script searches for g_renderer related addresses.
+//- DrawScene (Function address)
+//- Renderer (Global address of the renderer object)
+//@author Norman Ziebal
+//@category pib
 //@keybinding 
 //@menupath 
 //@toolbar 
+
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -24,46 +27,39 @@ import ghidra.program.model.pcode.*;
 import ghidra.program.model.address.*;
 
 public class renderer extends GhidraScript {
-	boolean debug = true;
+	PiBLib pib;
 	
 	public void find_Renderer() throws MemoryAccessException
 	{
 		Address sig_addr = findBytes(null, "\\x8B\\x0D.{0,4}\\x8D\\x45.{1}\\x50\\x57\\x53");
-		debug_print("find_Renderer: addr: 0x" + sig_addr);
+		pib.log("find_Renderer: addr: 0x" + sig_addr);
 		if (sig_addr == null) {
-			System.out.println("find_Renderer: signatur not found!");
+			printerr("find_Renderer: signatur not found!");
 			return;
 		}
 		
 		byte instr[] = new byte[6];
 		int ret = currentProgram.getMemory().getBytes(sig_addr, instr);
 		if (ret != instr.length) {
-			System.out.println("find_Renderer: failed to get all bytes.");
+			printerr("find_Renderer: failed to get all bytes.");
 			return;
 		}
 		instr = ArrayUtilities.reverse(instr);
 		
-		System.out.print("Renderer: 0x");
-		for (int i = 0; i < instr.length - 2; i++) {
-			System.out.print(Integer.toHexString(instr[i] & 0xff));
+		print("Renderer: 0x");
+		int offset_mov_instr = 2;
+		for (int i = 0; i < instr.length - offset_mov_instr; i++) {
+			print(Integer.toHexString(instr[i] & 0xff));
 		}
-		System.out.println();
+		print("\n");
 	}
 
 	public void find_DrawScene()
 	{
-		Address str_addr = find("3dlib\\Renderer.cpp");
-		debug_print("find_DrawScene: str_addr: 0x" + str_addr);
-		ReferenceIterator iter = currentProgram.getReferenceManager().getReferencesTo(str_addr);
-		
-		Set<Function> func_set = new HashSet<>();
-		FunctionManager fm = currentProgram.getFunctionManager();
-		for(ReferenceIterator it = iter; it.hasNext();) {
-			func_set.add(fm.getFunctionContaining(it.next().getFromAddress()));
-		}
+		Set<Function> func_set = pib.string_to_reflist("3dlib\\Renderer.cpp");
 		
 		if (func_set.size() > 1) {
-			System.out.println("find_DrawScene: failed because found more then one function!");
+			printerr("find_DrawScene: failed because found more then one function!");
 			return;
 		}
 		
@@ -71,18 +67,13 @@ public class renderer extends GhidraScript {
 		for(Iterator<Function> it = func_set.iterator(); it.hasNext();)
 			DrawScene_addr = it.next();
 			
-		System.out.println("DrawScene: 0x" + DrawScene_addr.getEntryPoint());
+		print("DrawScene: 0x" + DrawScene_addr.getEntryPoint() + "\n");
 	}
 	
     public void run() throws Exception
     {
+    	pib = new PiBLib(false, "none", this);
     	find_Renderer();
     	find_DrawScene();
     }
-    
-	public <T> void debug_print(T msg)
-	{
-		if (debug)
-			System.out.println(msg);
-	}
 }
