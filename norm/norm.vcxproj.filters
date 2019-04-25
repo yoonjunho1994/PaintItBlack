@@ -132,6 +132,9 @@
     <ClInclude Include="resource.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="mod_rpc.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -207,6 +210,9 @@
       <Filter>Quelldateien\hooks</Filter>
     </ClCompile>
     <ClCompile Include="splash.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="mod_rpc.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

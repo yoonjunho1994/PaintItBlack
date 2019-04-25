@@ -171,6 +171,7 @@
     <ClInclude Include="mod.h" />
     <ClInclude Include="mod_graphics.h" />
     <ClInclude Include="mod_overlay_new.h" />
+    <ClInclude Include="mod_rpc.h" />
     <ClInclude Include="mod_statistics.h" />
     <ClInclude Include="norm.h" />
     <ClInclude Include="hook_renderer.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="mod.cpp" />
     <ClCompile Include="mod_graphics.cpp" />
     <ClCompile Include="mod_overlay_new.cpp" />
+    <ClCompile Include="mod_rpc.cpp" />
     <ClCompile Include="mod_statistics.cpp" />
     <ClCompile Include="norm.cpp" />
     <ClCompile Include="hook_renderer.cpp" />
