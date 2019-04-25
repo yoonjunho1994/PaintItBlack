@@ -8,16 +8,17 @@
 #include "hook_chat.h"
 #include "hook_dx.h"
 #include "hook_gamemode.h"
-#include "hook_renderer.h"
 #include "hook_session.h"
 #include "hook_socket.h"
 #include "hook_user32.h"
+#include "hook_renderer.h"
 
 #include "mod_graphics.h"
 #include "mod_overlay.h"
 #include "mod_overlay_new.h"
 #include "mod_statistics.h"
 #include "mod_timestamp.h"
+#include "mod_rpc.h"
 
 #include <tchar.h>
 #include <winhttp.h>
@@ -44,6 +45,7 @@ void norm::install_mods()
     INSTALL_MOD(timestamp);
     INSTALL_MOD(overlay_new);
     INSTALL_MOD(graphics);
+    INSTALL_MOD(rpc);
 }
 
 void norm::start()
@@ -93,11 +95,14 @@ void norm::start()
     auto sptr = shared_from_this();
     total_hooks += chat_detour(sptr);
     total_hooks += socket_detour(sptr);
-    total_hooks += renderer_detour(sptr);
+    //total_hooks += renderer_detour(sptr);
     total_hooks += session_detour(sptr);
     total_hooks += dx_detour(sptr);
     total_hooks += gamemode_detour(sptr);
     total_hooks += user32_detour(sptr);
+
+	ProxyRenderer* p_renderer = new ProxyRenderer(sptr);
+    p_renderer->hook();
 
     this->install_mods();
 

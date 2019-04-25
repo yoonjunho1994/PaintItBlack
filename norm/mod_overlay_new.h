@@ -2,6 +2,7 @@
 #include "mod.h"
 #include "SFastFont.h"
 #include <vector>
+
 class overlay_new :
 	public norm_dll::mod
 {

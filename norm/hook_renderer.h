@@ -1,28 +1,48 @@
 #pragma once
-#include "stdafx.h"
 #include "client_ver.h"
-#include "debug_socket.h"
-#include "norm.h"
-#include <Windows.h>
 #include "mod.h"
+#include "norm.h"
 
-/* contains all hooks related to drawing and rendering */
-
-//int register_DrawScene_hook(std::shared_ptr<norm_dll::mod> mod_ptr);
-
-/* hooks all available functions. */
-int renderer_detour(std::shared_ptr<norm_dll::norm> c_state);
-DWORD renderer_get_addr();
 ULONG renderer_get_width();
 ULONG renderer_get_height();
 int renderer_get_fps();
 
 
-#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20150000) || CLIENT_VER_RE == 20180621)
-typedef int(__thiscall *CRenderer__TextOutScreen)(void*, int, int, LPCSTR, COLORREF);
-typedef bool(__fastcall *CRenderer__DrawScene)(void*);
-#endif
+class ProxyRenderer {
+private:
+    std::shared_ptr<norm_dll::norm> c_state;
 
-//DWORD get_DrawScene_Addr();
-//DWORD get_TextOutScreen_Addr();
+	void init() { c_renderer = RENDERER_PTR; }
 
+    class CRenderer {
+    public:
+        BYTE OFFSET_0;
+        ULONG width;
+        ULONG height;	
+        BYTE OFFSET_1;
+        int fps;
+    };
+
+    CRenderer* c_renderer = nullptr;
+    lpDrawScene DrawScene = DRAWSCENE_FN;
+
+	bool hooked = false;
+
+    static bool __fastcall pDrawScene(void* this_obj);
+
+public:
+    ProxyRenderer(std::shared_ptr<norm_dll::norm> c_state)
+        : c_state(c_state)
+    {
+        instance = this;
+    }
+
+    void hook();
+    
+	/* getter */
+	ULONG get_width();
+	ULONG get_height();
+    int get_fps();
+
+	static ProxyRenderer* instance;
+};
