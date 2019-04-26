@@ -176,6 +176,7 @@ void overlay_new::draw_scene(void* this_obj)
 {
 	if (this->x == -1 && this->y == -1) {
 		c_state->dbg_sock->do_send("Trying to get screen size!");
+        //ProxyRenderer::instance->get_height();
 		int screen_width = (int)renderer_get_width();
 		int screen_height = (int)renderer_get_height();
 		this->x = (int)(screen_width - 145);

@@ -141,6 +141,12 @@
     <ClInclude Include="mod_rpc.h">
       <Filter>Headerdateien\mods</Filter>
     </ClInclude>
+    <ClInclude Include="20150513.h">
+      <Filter>Headerdateien\hooks\client_defines</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -13,6 +13,8 @@ int session_detour(std::shared_ptr<norm_dll::norm> c_state);
 DWORD session_get_addr();
 DWORD session_get_averagePingTime();
 
+
+
 /* Enum definitions from the client */
 typedef enum TALKTYPE {
 	TT_NORMAL = 0x0,

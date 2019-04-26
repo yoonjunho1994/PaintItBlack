@@ -45,7 +45,7 @@ void norm::install_mods()
     INSTALL_MOD(timestamp);
     INSTALL_MOD(overlay_new);
     INSTALL_MOD(graphics);
-    INSTALL_MOD(rpc);
+    //INSTALL_MOD(rpc);
 }
 
 void norm::start()
@@ -101,8 +101,8 @@ void norm::start()
     total_hooks += gamemode_detour(sptr);
     total_hooks += user32_detour(sptr);
 
-	ProxyRenderer* p_renderer = new ProxyRenderer(sptr);
-    p_renderer->hook();
+	auto& p_renderer = ProxyRenderer::instance();
+    p_renderer.hook(sptr);
 
     this->install_mods();
 

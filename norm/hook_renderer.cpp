@@ -5,27 +5,27 @@
 
 #pragma warning(disable : 26440) // Suppress "noexcept" warning
 
-ProxyRenderer* ProxyRenderer::instance = 0;
-
 ULONG renderer_get_width()
 {
-    return ProxyRenderer::instance->get_width();
+    return ProxyRenderer::instance().get_width();
 }
 
 ULONG renderer_get_height()
 {
-    return ProxyRenderer::instance->get_height();
+    return ProxyRenderer::instance().get_height();
 }
 
 int renderer_get_fps()
 {
-    return ProxyRenderer::instance->get_fps();
+    return ProxyRenderer::instance().get_fps();
 }
 
-void ProxyRenderer::hook()
+void ProxyRenderer::hook(std::shared_ptr<norm_dll::norm> c_state)
 {
     if (hooked)
         return;
+
+	this->c_state = c_state;
 
     LONG err = 0;
     int hook_count = 0;
@@ -46,12 +46,13 @@ void ProxyRenderer::hook()
 
 bool __fastcall ProxyRenderer::pDrawScene(void* this_obj)
 {
-    if (!instance->c_renderer)
-        instance->init();
+    auto& instance = ProxyRenderer::instance();
+    if (!instance.c_renderer)
+        instance.init();
 
-    bool res = (instance->DrawScene)(this_obj);
+    bool res = (instance.DrawScene)(this_obj);
 
-    for (auto callback : instance->c_state->mods)
+    for (auto callback : instance.c_state->mods)
         callback->draw_scene(this_obj);
 
     return res;
