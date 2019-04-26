@@ -133,7 +133,7 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="mod_rpc.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\mods</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -213,7 +213,7 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="mod_rpc.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\mods</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -35,6 +35,8 @@ public:
     virtual HRESULT WaitForVerticalBlank(DWORD*, HANDLE*) { return E_NOTIMPL; };
     virtual void ddraw_release() {}
 
+	virtual void init() {} // for mods which require syscalls which are blocked for DllMain.
+
 protected:
     norm* c_state;
     void print_to_chat(char* msg);

@@ -145,3 +145,6 @@ ULONG session_get_averagePingTime()
 	return *(ULONG*)(session_get_addr() + 0x634);
 #endif
 }
+
+//+0x1210 +0x0C Base level
+//+0x1220 +0x08 Job level

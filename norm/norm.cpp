@@ -18,6 +18,7 @@
 #include "mod_overlay_new.h"
 #include "mod_statistics.h"
 #include "mod_timestamp.h"
+#include "mod_rpc.h"
 
 #include <tchar.h>
 #include <winhttp.h>
@@ -44,6 +45,7 @@ void norm::install_mods()
     INSTALL_MOD(timestamp);
     INSTALL_MOD(overlay_new);
     INSTALL_MOD(graphics);
+    INSTALL_MOD(rpc);
 }
 
 void norm::start()
