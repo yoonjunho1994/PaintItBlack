@@ -44,6 +44,7 @@ build_script:
 - cmd: msbuild norm_release.sln /p:DefineConstants="%Defines%;DLL_RELEASE=%APPVEYOR_BUILD_VERSION%"
 after_build:
 - 7z a %DEPLOY_NAME%.zip %APPVEYOR_BUILD_FOLDER%\Release\norm.dll
+- cat 'Release\norm.tlog\norm.lastbuildstate'
 
 deploy:
   release: v$(appveyor_build_version)
