@@ -2,3 +2,4 @@
 // z. B. von Namen der Funktionen und Makros.
 // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=865984
 #define PROXY0(name) { DEBUG_LOGGING_MORE_DETAIL((CLASSNAME "::" #name "()")); return m_Instance->name(); }
+#define RENDERER_DATA BYTE offset0[0x24]; \ ULONG width; \ BYTE offset1[0x0]; \ ULONG height; \ BYTE offset2[0x18]; \ int fps;

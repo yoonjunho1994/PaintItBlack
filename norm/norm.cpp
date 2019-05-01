@@ -96,13 +96,16 @@ void norm::start()
     total_hooks += chat_detour(sptr);
     total_hooks += socket_detour(sptr);
     //total_hooks += renderer_detour(sptr);
-    total_hooks += session_detour(sptr);
+    //total_hooks += session_detour(sptr);
     total_hooks += dx_detour(sptr);
     total_hooks += gamemode_detour(sptr);
     total_hooks += user32_detour(sptr);
 
 	auto& p_renderer = ProxyRenderer::instance();
     p_renderer.hook(sptr);
+
+	auto& p_session = ProxySession::instance();
+    p_session.hook(sptr);
 
     this->install_mods();
 

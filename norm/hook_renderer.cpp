@@ -36,10 +36,10 @@ void ProxyRenderer::hook(std::shared_ptr<norm_dll::norm> c_state)
     if (err == NO_ERROR) {
         hook_count++;
     } else
-        c_state->dbg_sock->do_send(info_buf);
+        this->c_state->dbg_sock->do_send(info_buf);
 
     sprintf_s(info_buf, "Renderer hooks available: %d", hook_count);
-    c_state->dbg_sock->do_send(info_buf);
+    this->c_state->dbg_sock->do_send(info_buf);
 
 	this->hooked = true;
 }

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "mod_overlay_new.h"
-#include "hook_session.h"
+
 #include "hook_renderer.h"
 #include "norm.h"
 
@@ -119,7 +119,7 @@ HRESULT overlay_new::end_scene(IDirect3DDevice7** d3ddevice)
 
 	if (display_ping) {
 		char ping_str[32];
-		DWORD ping = session_get_averagePingTime();
+        ULONG ping = p_session.get_average_ping_time();
 		if (ping == 0)
 			sprintf_s(ping_str, "Ping: wait...");
 		else

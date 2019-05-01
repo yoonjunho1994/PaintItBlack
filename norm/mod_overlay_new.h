@@ -2,6 +2,7 @@
 #include "mod.h"
 #include "SFastFont.h"
 #include <vector>
+#include "hook_session.h"
 
 class overlay_new :
 	public norm_dll::mod
@@ -13,6 +14,7 @@ public:
 	HRESULT end_scene(IDirect3DDevice7**);
 
 private:
+    ProxySession& p_session = ProxySession::instance();
 	int initialized = 0;
 	int display_ping = false;
 	int display_fps = false;
