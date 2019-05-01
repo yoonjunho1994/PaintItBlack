@@ -1,9 +1,8 @@
 #include "stdafx.h"
-#include "mod_timestamp.h"
-#include <time.h>
 
-#include "hook_chat.h"
-#include "hook_session.h"
+#include "mod_timestamp.h"
+
+#include <time.h>
 
 timestamp::timestamp(norm_dll::norm* c_state) : mod(c_state)
 {

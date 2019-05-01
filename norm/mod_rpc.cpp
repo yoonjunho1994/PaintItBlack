@@ -51,8 +51,8 @@ void rpc::updateDiscordPresence()
         sprintf_s(buffer, "IGN: norm");
         discordPresence.details = buffer;
         discordPresence.startTimestamp = this->StartTime;
-        discordPresence.largeImageKey = "crusader";
-        discordPresence.smallImageKey = "kafra";
+        discordPresence.largeImageKey = "novice";
+        discordPresence.smallImageKey = "marker";
         discordPresence.largeImageText = "Job: Crusader";
         discordPresence.smallImageText = "Dont know what to put here!";
         discordPresence.instance = 0;
