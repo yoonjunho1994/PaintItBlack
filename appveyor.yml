@@ -40,13 +40,12 @@ matrix:
 before_build:
   - nuget restore
   - ps: ls 'C:\projects\pib\'
-  - ps: mv AllCppCoreChecks.ruleset 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Team Tools\Static Analysis Tools\Rule Sets\AllCppCoreChecks.ruleset'
+  - ps: cat 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Team Tools\Static Analysis Tools\Rule Sets\CppCoreCheckArithmeticRules.ruleset'
 
 build_script:
 - cmd: msbuild norm_release.sln /p:DefineConstants="%Defines%;DLL_RELEASE=%APPVEYOR_BUILD_VERSION%"
 after_build:
 - 7z a %DEPLOY_NAME%.zip %APPVEYOR_BUILD_FOLDER%\Release\norm.dll
-- cat 'Release\norm.tlog\norm.lastbuildstate'
 
 deploy:
   release: v$(appveyor_build_version)
