@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "hook_session.h"
 #include "hook_gamemode.h"
+#include "norm.h"
+#include "hook.h"
 #include "detours.h"
 
 #pragma warning(disable: 26440) // Suppress "noexcept" warning
 
+namespace norm_dll {
 static std::shared_ptr<norm_dll::norm> c_state;
 int init_ping_calls = 2;
 
@@ -141,4 +144,5 @@ int ProxySession::get_jobnextexp()
 int ProxySession::get_jobexp()
 {
     return 0;
+}
 }

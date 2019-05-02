@@ -1,13 +1,14 @@
 #pragma once
 #include "client_ver.h"
-#include "mod.h"
-#include "norm.h"
 #include "singleton.h"
+#include <memory>
 
 ULONG renderer_get_width();
 ULONG renderer_get_height();
 int renderer_get_fps();
 
+namespace norm_dll {
+class norm;
 class ProxyRenderer final : public Singleton<ProxyRenderer> {
 private:
     std::shared_ptr<norm_dll::norm> c_state;
@@ -35,3 +36,4 @@ public:
     ULONG get_height();
     int get_fps();
 };
+}

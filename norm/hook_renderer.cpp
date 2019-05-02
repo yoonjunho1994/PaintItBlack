@@ -2,24 +2,25 @@
 
 #include "hook_renderer.h"
 #include "detours.h"
+#include "norm.h"
 
 #pragma warning(disable : 26440) // Suppress "noexcept" warning
 
 ULONG renderer_get_width()
 {
-    return ProxyRenderer::instance().get_width();
+    return norm_dll::ProxyRenderer::instance().get_width();
 }
 
 ULONG renderer_get_height()
 {
-    return ProxyRenderer::instance().get_height();
+    return norm_dll::ProxyRenderer::instance().get_height();
 }
 
 int renderer_get_fps()
 {
-    return ProxyRenderer::instance().get_fps();
+    return norm_dll::ProxyRenderer::instance().get_fps();
 }
-
+namespace norm_dll {
 void ProxyRenderer::hook(std::shared_ptr<norm_dll::norm> c_state)
 {
     if (hooked)
@@ -85,3 +86,4 @@ int ProxyRenderer::get_fps()
 }
 
 #undef AV_ERR
+}

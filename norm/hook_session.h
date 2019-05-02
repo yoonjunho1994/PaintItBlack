@@ -1,9 +1,10 @@
 #pragma once
 #include "client_ver.h"
-#include "norm.h"
 #include "singleton.h"
-#include "hook.h"
+#include <memory>
 
+namespace norm_dll {
+class norm;
 class ProxySession final : public Singleton<ProxySession> {
 private:
     std::shared_ptr<norm_dll::norm> c_state;
@@ -39,7 +40,7 @@ public:
     int get_jobexp();
 	
 };
-
+}
 /* Enum definitions from the client */
 typedef enum TALKTYPE {
     TT_NORMAL = 0x0,
