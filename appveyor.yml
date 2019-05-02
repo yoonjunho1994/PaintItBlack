@@ -40,7 +40,7 @@ matrix:
 before_build:
   - nuget restore
   - ps: ls 'C:\projects\pib\'
-  - ps: cat 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Team Tools\Static Analysis Tools\Rule Sets\AllCppCoreChecks.ruleset'
+  - ps: cat 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Team Tools\Static Analysis Tools\Rule Sets\CppCoreCheckArithmeticRules.ruleset'
 
 build_script:
 - cmd: msbuild norm_release.sln /p:DefineConstants="%Defines%;DLL_RELEASE=%APPVEYOR_BUILD_VERSION%"
