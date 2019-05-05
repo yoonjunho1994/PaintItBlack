@@ -30,7 +30,7 @@ HRESULT debug::end_scene(IDirect3DDevice7** d3ddevice)
 			p_session.get_jobnextexp());
         int height = p_renderer.get_height();
         int pos_height = height - (height - 200);
-        g->print_screen(this->debug_output, p_renderer.get_width() - 145, pos_height);
+        g->print_screen(this->debug_output, p_renderer.get_width() - 170, pos_height);
     }
 
     return S_OK;

@@ -105,46 +105,46 @@ ULONG ProxySession::get_average_ping_time()
 
 ULONG ProxySession::get_aid()
 {
-    return 0;
+    return this->c_session->aid;
 }
 
 ULONG ProxySession::get_gid()
 {
-    return 0;
+    return this->c_session->gid;
 }
 
 int ProxySession::get_job()
 {
-    return 0;
+    return this->c_session->job;
 }
 
 int ProxySession::get_exp()
 {
-    return 0;
+    return this->c_session->exp;
 }
 
 int ProxySession::get_level()
 {
-    return 0;
+    return this->c_session->level;
 }
 
 int ProxySession::get_next_exp()
 {
-    return 0;
+    return this->c_session->next_exp;
 }
 
 int ProxySession::get_joblevel()
 {
-    return 0;
+    return this->c_session->joblevel;
 }
 
 int ProxySession::get_jobnextexp()
 {
-    return 0;
+    return this->c_session->jobnextexp;
 }
 
 int ProxySession::get_jobexp()
 {
-    return 0;
+    return this->c_session->jobexp;
 }
 }
