@@ -19,6 +19,7 @@
 #include "mod_statistics.h"
 #include "mod_timestamp.h"
 #include "mod_rpc.h"
+#include "mod_debug.h"
 
 #include <tchar.h>
 #include <winhttp.h>
@@ -43,6 +44,7 @@ void norm::install_mods()
 
     // Disable a mod by commenting out the specific line.
     mods.push_back(std::make_shared<overlay_new>(this, g));
+    mods.push_back(std::make_shared<debug>(this, g));
     INSTALL_MOD(timestamp);
     //INSTALL_MOD(rpc);
     //INSTALL_MOD(statistics);

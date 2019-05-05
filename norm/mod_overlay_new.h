@@ -1,6 +1,8 @@
 #pragma once
 #include "mod.h"
 #include "mod_graphics.h"
+#include "norm.h"
+
 
 class overlay_new :
 	public norm_dll::mod
@@ -20,7 +22,6 @@ private:
 	std::shared_ptr<graphics> g;
 
 	HRESULT end_scene(IDirect3DDevice7**);
-	int get_talk_type(void**, void**, int*, int*, int*);
 	int get_talk_type(void**, char**, int*, char**, int*);
 	void draw_scene(void * this_obj);
 };

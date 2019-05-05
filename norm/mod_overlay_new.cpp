@@ -1,9 +1,6 @@
 #include "stdafx.h"
+
 #include "mod_overlay_new.h"
-
-#include "hook_renderer.h"
-#include "norm.h"
-
 
 overlay_new::overlay_new(norm_dll::norm* c_state, std::shared_ptr<graphics> g)
     : mod(c_state)
@@ -37,11 +34,7 @@ HRESULT overlay_new::end_scene(IDirect3DDevice7** d3ddevice)
 	return S_OK;
 }
 
-#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
-int overlay_new::get_talk_type(void **this_obj, void **src, int *a1, int *a2, int* retval)
-#elif CLIENT_VER == 20150000
 int overlay_new::get_talk_type(void**this_obj, char** src, int* a1, char** a2, int* retval)
-#endif
 {
 	if (strcmp((char*)*src, "/ping") == 0) {
 		this->display_ping ^= 1;

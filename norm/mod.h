@@ -1,8 +1,8 @@
 #pragma once
 #include "client_ver.h"
 #include "debug_socket.h"
-#include "hook_session.h"
 #include "hook_renderer.h"
+#include "hook_session.h"
 #define INITGUID
 #include <d3d.h>
 
@@ -49,18 +49,11 @@ private:
     friend class ProxyRenderer;
     virtual void draw_scene(void*) {}
 
-	/* Session callbacks */
+    /* Session callbacks */
     friend class ProxySession;
-#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
-    virtual int get_talk_type(void**, void**, int*, int*, int*)
-    {
-        return 0;
-    }
-#elif CLIENT_VER == 20150000
     virtual int get_talk_type(void**, char**, int*, char**, int*)
     {
         return 0;
     }
-#endif
 };
 }

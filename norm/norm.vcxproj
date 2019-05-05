@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="20150513.h" />
+    <ClInclude Include="20180621.h" />
     <ClInclude Include="20180921.h" />
     <ClInclude Include="CacheInfo.h" />
     <ClInclude Include="CProxyIDirect3D7.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="hook_session.h" />
     <ClInclude Include="hook_user32.h" />
     <ClInclude Include="mod.h" />
+    <ClInclude Include="mod_debug.h" />
     <ClInclude Include="mod_graphics.h" />
     <ClInclude Include="mod_overlay_new.h" />
     <ClInclude Include="mod_rpc.h" />
@@ -204,6 +206,7 @@
     <ClCompile Include="hook_session.cpp" />
     <ClCompile Include="hook_user32.cpp" />
     <ClCompile Include="mod.cpp" />
+    <ClCompile Include="mod_debug.cpp" />
     <ClCompile Include="mod_graphics.cpp" />
     <ClCompile Include="mod_overlay_new.cpp" />
     <ClCompile Include="mod_rpc.cpp" />

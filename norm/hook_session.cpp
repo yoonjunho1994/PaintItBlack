@@ -1,9 +1,11 @@
 #include "stdafx.h"
+
+#include "hook.h"
 #include "hook_session.h"
 #include "hook_gamemode.h"
-#include "norm.h"
-#include "hook.h"
+
 #include "detours.h"
+#include "norm.h"
 
 #pragma warning(disable: 26440) // Suppress "noexcept" warning
 

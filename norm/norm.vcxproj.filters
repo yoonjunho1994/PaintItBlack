@@ -147,6 +147,12 @@
     <ClInclude Include="singleton.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="20180621.h">
+      <Filter>Headerdateien\hooks\client_defines</Filter>
+    </ClInclude>
+    <ClInclude Include="mod_debug.h">
+      <Filter>Headerdateien\mods</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -225,6 +231,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="mod_rpc.cpp">
+      <Filter>Quelldateien\mods</Filter>
+    </ClCompile>
+    <ClCompile Include="mod_debug.cpp">
       <Filter>Quelldateien\mods</Filter>
     </ClCompile>
   </ItemGroup>
