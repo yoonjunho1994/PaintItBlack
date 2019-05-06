@@ -8,7 +8,7 @@
 
 namespace norm_dll {
 constexpr auto RO_offset = 3; /* RO_2018-.... removes RO_*/
-constexpr auto splash_offset = 257 + 10; /* Logo length / 2 and + 10 for some gap*/
+constexpr auto splash_offset = 152 + 5; /* Logo length / 2 and + 10 for some gap*/
 
 class norm : public std::enable_shared_from_this<norm> {
 	public:
@@ -21,7 +21,8 @@ class norm : public std::enable_shared_from_this<norm> {
         void hide_splash();
 
 	private:
-        void verify_client();
+        bool check_cheat_defender();
+        bool verify_client();
         void show_splash();
         HINSTANCE hInst;
 		void install_mods();

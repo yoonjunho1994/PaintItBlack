@@ -225,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="pib_logo.bmp" />
+    <Image Include="pib_logo2.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include <stdio.h>
 
-//#define CLIENT_VER 20150000 /* needs to fit the client date of the exe. */
+//#define CLIENT_VER 20180621/* needs to fit the client date of the exe. */
 //#define CLIENT_VER_RE 20180621
 //#define DEBUG	/* requires a debug-server listening on localhost:1337 */
 
@@ -12,13 +12,14 @@
 
 /* disable mods by undefining OUTDATED*/
 //#define COMENC	/* requires src edit to enable "encryption" on server side. */
-#define CHAT_INPUT
 
 #if defined(CLIENT_VER) && defined(CLIENT_VER_RE)
 #undef CLIENT_VER_RE
 #endif
 
-#if CLIENT_VER == 20180621
+#if CLIENT_VER == 20180919
+#define DLL_VER "RO_2018-09-19Ragexe"
+#elif CLIENT_VER == 20180621
 #define DLL_VER "RO_2018-06-21Ragexe"
 #elif CLIENT_VER == 20150000
 #define DLL_VER "RO_2015-05-13Ragexe"

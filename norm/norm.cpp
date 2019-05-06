@@ -2,8 +2,8 @@
 
 #include "detours.h"
 #include "norm.h"
-#include "verifier.h"
 #include "resource.h"
+#include "verifier.h"
 
 #include "hook_chat.h"
 #include "hook_dx.h"
@@ -21,6 +21,7 @@
 
 #include <tchar.h>
 #include <winhttp.h>
+#include <fstream>
 
 #pragma comment(lib, "winhttp.lib")
 
@@ -47,11 +48,6 @@ void norm::install_mods()
 
 void norm::start()
 {
-	//
-	// Display splash screen
-	//
-    this->show_splash();
-
     char info_buf[256];
     /* Connect to the debug socket */
     dbg_sock = std::make_shared<debug_socket>();
@@ -70,8 +66,16 @@ void norm::start()
 #endif
     dbg_sock->do_send(info_buf);
 
-	/* Verify client date. */
-    this->verify_client();
+    /* Verify client date. */
+    if (!this->verify_client())
+        return;
+
+	/* Check for drop-in cheat defender dll */
+    if (!this->check_cheat_defender())
+        return;
+
+    /* Display splash screen. */
+    this->show_splash();
 
     /* Hook functions. */
     err = DetourTransactionBegin();
@@ -109,7 +113,9 @@ void norm::start()
     //
     // ping interval change from 12000 to 2000
     // Search for: 12000
-#if (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
+#if CLIENT_VER == 20180919
+    LPVOID hex_code = (LPVOID)0x0094BADE;
+#elif (CLIENT_VER == 20180621 || CLIENT_VER == 20180620)
     LPVOID hex_code = (LPVOID)0x0094AB1E;
 #elif CLIENT_VER == 20150000
     LPVOID hex_code = (LPVOID)0x0087344E;
@@ -146,15 +152,14 @@ void norm::start()
     dbg_sock->do_send(info_buf);
 }
 
-void norm::verify_client()
+bool norm::verify_client()
 {
     //
     // Checking for compatible client and produce debug message.
     //
     this->dbg_sock->do_send("Verifying PE compatibility ...");
     if (strcmp((char*)VERIFY_ADDR, VERIFY_STR) != 0) {
-        char error_buf[512];
-        char date_buf[256];
+        char date_buf[512];
         this->dbg_sock->do_send("DLL and PE are not compatibile!");
 #ifdef CLIENT_VER_RE
         sprintf_s(date_buf, "Client is not compatible with %dRE-norm.dll!", CLIENT_VER_RE);
@@ -164,7 +169,9 @@ void norm::verify_client()
         strcat_s(date_buf, "\n\nSeaching for more debug information ...");
         strcat_s(date_buf, "\nIf the client crashes before any additional output is provided,");
         strcat_s(date_buf, "\nplease report it!");
+        strcat_s(date_buf, "\nNOTE: Not compatible with NEMO Hide build info in client!");
         strcat_s(date_buf, "\n\n Your report should include your client 'exe'.");
+        //strcat_s(date_buf, "\n Note: nemo patch 'Hide build info' is currently not supported!");
         MessageBoxA(0, date_buf, "norm.dll error!", MB_OK);
 
         // Search for the real clientdate.
@@ -173,6 +180,7 @@ void norm::verify_client()
         DWORD search_addr = 0x00401000;
         for (;;) {
             if (strncmp("\\RagnarokClient", (char*)search_addr, 15) == 0) {
+                char error_buf[512];
 
                 // Search the date.
                 DWORD found_addr = search_addr;
@@ -220,9 +228,10 @@ void norm::verify_client()
             }
             search_addr++;
         }
-        return;
+        return false;
     }
     this->dbg_sock->do_send("Success!");
+    return true;
 }
 
 void norm::hide_splash()
@@ -235,19 +244,57 @@ void norm::show_splash()
 {
     int offset = 0;
     HBITMAP bmp_logo = (HBITMAP)::LoadImage(NULL, _T("logo.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+    auto bmp_pib = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP2));
     if (bmp_logo) {
-        HWND hWnd_logo = ::CreateWindowA("STATIC", "splash", WS_POPUP, (GetSystemMetrics(SM_CXSCREEN) / 2) + splash_offset, (GetSystemMetrics(SM_CYSCREEN) / 2), 0, 0, NULL, NULL, NULL, NULL);
-        this->logo.Init(hWnd_logo, this->hInst, bmp_logo);
-        offset = -splash_offset - 1;
+        BITMAP binfo_logo;
+        BITMAP binfo_pib;
+        GetObject(bmp_logo, sizeof(BITMAP), &binfo_logo);
+        GetObject(bmp_pib, sizeof(BITMAP), &binfo_pib);
+        if (binfo_logo.bmWidth <= binfo_pib.bmWidth) { /* logo width is not allowed be larger then the pib logo*/
+            HWND hWnd_logo = ::CreateWindowA("STATIC", "splash", WS_POPUP, (GetSystemMetrics(SM_CXSCREEN) / 2) + splash_offset, (GetSystemMetrics(SM_CYSCREEN) / 2), 0, 0, NULL, NULL, NULL, NULL);
+            this->logo.Init(hWnd_logo, this->hInst, bmp_logo);
+            offset = -splash_offset - 1;
+        }
     }
 
-	HWND hWnd_pib = ::CreateWindowA("STATIC", "splash", WS_POPUP, (GetSystemMetrics(SM_CXSCREEN) / 2) + offset, (GetSystemMetrics(SM_CYSCREEN) / 2), 0, 0, NULL, NULL, NULL, NULL);
-    auto bmp_pib = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP1));
+    HWND hWnd_pib = ::CreateWindowA("STATIC", "splash", WS_POPUP, (GetSystemMetrics(SM_CXSCREEN) / 2) + offset, (GetSystemMetrics(SM_CYSCREEN) / 2), 0, 0, NULL, NULL, NULL, NULL);
     this->pib.Init(hWnd_pib, this->hInst, bmp_pib);
-	
-	this->pib.Show();
+
+    this->pib.Show();
     this->logo.Show();
     Sleep(1000); // Display the logo for atleast 1 second.
+}
+
+bool norm::check_cheat_defender()
+{
+    std::ifstream fp("CDClient.dll");
+
+    /* Client does not have cheat defender. Skipping. */
+    if (!fp.is_open())
+        return true;
+
+	std::string str((std::istreambuf_iterator<char>(fp)),
+        std::istreambuf_iterator<char>());
+
+	std::hash<std::string> hash_fn;
+    std::size_t str_hash = hash_fn(str);
+	
+	char info_buf[64];
+    sprintf_s(info_buf, "Cheat Defender hash: %zx", str_hash);
+    this->dbg_sock->do_send(info_buf);
+
+	if (str_hash != 0x2a4bd5ce) {
+        char err_buf[512];
+        sprintf_s(err_buf, "Detected Cheat-Defender!\n\n");
+        strcat_s(err_buf, "The found file is not compatible.\n");
+        strcat_s(err_buf, "Please use a dropin replacement! It can be found here:\n\n");
+        strcat_s(err_buf, "https://rathena.org/board/topic/118729-client-mods-paint-it-black/\nor\n");
+        strcat_s(err_buf, "https://gitlab.com/4144/Nemo/blob/master/Input/CDClient.dll\n\n");
+        strcat_s(err_buf, "SHA-1: 32158C097CD656FF62BB094CF9F4F2BF1A6B1CAD");
+        MessageBoxA(0, err_buf, "norm.dll error!", MB_OK);
+        return false;
+    }
+    return true;
 }
 
 norm::~norm()
