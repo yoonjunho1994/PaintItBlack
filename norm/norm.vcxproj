@@ -81,6 +81,7 @@
     <CodeAnalysisRuleSet>CppCoreCheckFuncRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet>AllCppCoreChecks.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <OutDir>$(BuildDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
