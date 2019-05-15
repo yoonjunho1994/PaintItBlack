@@ -41,6 +41,7 @@ typedef void(__thiscall* lpRecalcAveragePingTime)(void*, unsigned long);
 	/* 0x1230 */	BYTE offset3[0xA0];		\
 	/* 0x12D0 */	int jobnextexp;			\
 	/* 0x12D4 */	int jobexp;				
+	//+5780
 	
 //};
 
