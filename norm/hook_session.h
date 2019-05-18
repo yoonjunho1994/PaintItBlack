@@ -20,7 +20,7 @@ private:
     bool hooked = false;
 
     ProxySession() {}
-    static signed int __fastcall pGetTalkType(void* this_obj, DWORD EDX, char* a2, int a3, char* a4);
+    static PGETTALKTYPE_FN;
     static void __fastcall pRecalcAveragePingTime(void* this_obj, DWORD EDX, unsigned long a1);
 
 public:

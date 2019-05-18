@@ -19,26 +19,30 @@ typedef bool(__thiscall* lpDrawScene)(void*);
 //
 // CSession defines
 //
-typedef signed int(__thiscall* lpGetTalkType)(void*, char*, int, char*);
+typedef int(__thiscall* lpGetTalkType)(void*, void*, int, int);
 typedef void(__thiscall* lpRecalcAveragePingTime)(void*, unsigned long);
 
+#define PGETTALKTYPE_FN int __fastcall pGetTalkType(void* this_obj, DWORD EDX, void* a2, int a3, int a4)
+
 //struct CSession {
-#define SESSION_DATA					\
-    BYTE offset0[0x44];					\
-    ULONG aid;							\
-    ULONG gid;							\
-    BYTE offset1[0x44];					\
-    int job;							\
-    int exp;							\
-    int level;							\
-    BYTE offset2[0x44];					\
-    int next_exp;						\
-    int joblevel;						\
-    BYTE offset3[0x44];					\
-    int jobnextexp;						\
-    int jobexp;							\
-    /* 0x134 */ BYTE offset4[0x4FC];	\
-    /* 0x630 */ ULONG average_ping_time;
+#define SESSION_DATA                      \
+    /* 0x0	  */ BYTE offset0[0x634]; \
+    /* 0x634  */ ULONG average_ping_time; \
+    /* 0x638  */ BYTE offset1[0xBCC];     \
+    /* 0x1204 */ ULONG aid;               \
+    /* 0x1208 */ ULONG gid;               \
+    /* 0x120C */ BYTE offset2[0x8];       \
+    /* 0x1214 */ int job;                 \
+    /* 0x1218 */ int exp;                 \
+    /* 0x121C */ int level;               \
+    /* 0x1220 */ int point;               \
+    /* 0x1224 */ int next_exp;            \
+    /* 0x1228 */ int joblevel;            \
+    /* 0x122C */ int skillPoint;          \
+    /* 0x1230 */ BYTE offset3[0xA0];      \
+    /* 0x12D0 */ int jobnextexp;          \
+    /* 0x12D4 */ int jobexp;
+	//+5780
 //};
 
 #define GETTALKTYPE_FN				0x00A0CF40

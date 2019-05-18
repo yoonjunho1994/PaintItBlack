@@ -51,7 +51,7 @@ private:
 
     /* Session callbacks */
     friend class ProxySession;
-    virtual int get_talk_type(void**, char**, int*, char**, int*)
+    virtual int get_talk_type(char* msg, int* retval)
     {
         return 0;
     }

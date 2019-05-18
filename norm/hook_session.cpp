@@ -30,7 +30,7 @@ signed int __fastcall ProxySession::pGetTalkType(void *this_obj, DWORD EDX, char
 	int retval = 0;
 
 	for (auto callback : instance.c_state->mods)
-		cret += callback->get_talk_type(&this_obj, &a2, &a3, &a4, &retval);
+		cret += callback->get_talk_type(reinterpret_cast<char*>(&a2), &retval);
 
 	if (cret == 1)
 		return retval;

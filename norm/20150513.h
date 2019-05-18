@@ -42,7 +42,6 @@ typedef void(__thiscall* lpRecalcAveragePingTime)(void*, unsigned long);
 	/* 0x12D0 */	int jobnextexp;			\
 	/* 0x12D4 */	int jobexp;				
 	//+5780
-	
 //};
 
 #define GETTALKTYPE_FN				0x00925100

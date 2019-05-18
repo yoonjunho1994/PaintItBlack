@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include <stdio.h>
 
-#define CLIENT_VER 20150000 /* needs to fit the client date of the exe. */
+#define CLIENT_VER 20180621 /* needs to fit the client date of the exe. */
 //#define CLIENT_VER_RE 20180621
 #define DEBUG /* requires a debug-server listening on localhost:1337 */
 
@@ -22,6 +22,7 @@
 
 #elif CLIENT_VER == 20180621
 #define DLL_VER "RO_2018-06-21Ragexe"
+#include "20180621.h"
 
 #elif CLIENT_VER == 20150000
 #define DLL_VER "RO_2015-05-13Ragexe"
