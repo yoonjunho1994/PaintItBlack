@@ -22,7 +22,7 @@ private:
 	std::shared_ptr<graphics> g;
 
 	HRESULT end_scene(IDirect3DDevice7**);
-	int get_talk_type(void**, char**, int*, char**, int*);
+    int get_talk_type(char*, int*);
 	void draw_scene(void * this_obj);
 };
 

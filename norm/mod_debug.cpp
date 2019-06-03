@@ -36,9 +36,9 @@ HRESULT debug::end_scene(IDirect3DDevice7** d3ddevice)
     return S_OK;
 }
 
-int debug::get_talk_type(void** this_obj, char** src, int* a1, char** a2, int* retval)
+int debug::get_talk_type(char* src, int* retval)
 {
-    if (strcmp(*src, "/debug") == 0) {
+    if (strcmp(src, "/debug") == 0) {
         this->display_debug ^= 1;
         char buf[64];
         if (this->display_debug)

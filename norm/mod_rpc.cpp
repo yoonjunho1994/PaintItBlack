@@ -82,13 +82,9 @@ rpc::~rpc()
 {
 }
 
-#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
-int rpc::get_talk_type(void** this_obj, void** src, int* a1, int* a2, int* retval)
-#elif CLIENT_VER == 20150000
-int rpc::get_talk_type(void** this_obj, char** src, int* a1, char** a2, int* retval)
-#endif
+int rpc::get_talk_type(char* src, int* retval)
 {
-    if (strcmp((char*)*src, "/rpc") == 0) {
+    if (strcmp(src, "/rpc") == 0) {
         updateDiscordPresence();
         char buf[64];
 		sprintf_s(buf, "RPC executed!.");
