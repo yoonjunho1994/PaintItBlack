@@ -15,13 +15,14 @@ private:
     };
 
     CSession* c_session = reinterpret_cast<CSession*>(SESSION_PTR);
+	// TODO: rename lpVariables.
     lpGetTalkType GetTalkType = reinterpret_cast<lpGetTalkType>(GETTALKTYPE_FN);
     lpRecalcAveragePingTime RecalcAveragePingTime = reinterpret_cast<lpRecalcAveragePingTime>(RECALCAVERAGEPINGTIME_FN);
     bool hooked = false;
 
     ProxySession() {}
     static PGETTALKTYPE_FN;
-    static void __fastcall pRecalcAveragePingTime(void* this_obj, DWORD EDX, unsigned long a1);
+    static void __fastcall proxyRecalcAveragePingTime(void* this_obj, DWORD EDX, unsigned long a1);
 
 public:
     ProxySession(token) {}

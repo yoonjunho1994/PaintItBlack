@@ -18,10 +18,10 @@ int init_ping_calls = 2;
  * /goldpc
  */
 #if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
-int __fastcall ProxySession::pGetTalkType(void* this_obj, DWORD EDX, void* a2, int a3, int a4)
+int __fastcall ProxySession::proxyGetTalkType(void* this_obj, DWORD EDX, void* a2, int a3, int a4)
 {
 #elif CLIENT_VER == 20150000
-signed int __fastcall ProxySession::pGetTalkType(void *this_obj, DWORD EDX, char *a2, int a3, char *a4)
+signed int __fastcall ProxySession::proxyGetTalkType(void *this_obj, DWORD EDX, char *a2, int a3, char *a4)
 {
 #endif
     auto& instance = ProxySession::instance();
@@ -46,7 +46,7 @@ signed int __fastcall ProxySession::pGetTalkType(void *this_obj, DWORD EDX, char
  * %10.2f\t%10d\n
  * Found function will call RecalcAveragePingTime at the end.
  */
-void __fastcall ProxySession::pRecalcAveragePingTime(void* this_obj, DWORD EDX, unsigned long a1)
+void __fastcall ProxySession::proxyRecalcAveragePingTime(void* this_obj, DWORD EDX, unsigned long a1)
 {
     auto& instance = ProxySession::instance();
 	instance.c_state->dbg_sock->do_send("CSession__RecalcAveragePingTime called!");
@@ -76,14 +76,14 @@ void ProxySession::hook(std::shared_ptr<norm_dll::norm> state_)
 	char info_buf[256];
 	this->c_state = state_;
 
-	err = DetourAttach(&(LPVOID&)GetTalkType, &pGetTalkType);
+	err = DetourAttach(&(LPVOID&)GetTalkType, &proxyGetTalkType);
 	CHECK(info_buf, err);
 	if (err == NO_ERROR) {
 		hook_count++;
 	} else 
 		this->c_state->dbg_sock->do_send(info_buf);
 
-	err = DetourAttach(&(LPVOID&)RecalcAveragePingTime, &pRecalcAveragePingTime);
+	err = DetourAttach(&(LPVOID&)RecalcAveragePingTime, &proxyRecalcAveragePingTime);
 	CHECK(info_buf, err);
 	if (err == NO_ERROR) {
 		hook_count++;
