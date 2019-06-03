@@ -26,22 +26,24 @@ typedef void(__thiscall* lpRecalcAveragePingTime)(void*, unsigned long);
 
 //struct CSession {
 #define SESSION_DATA                      \
-    /* 0x0	  */ BYTE offset0[0x634]; \
-    /* 0x634  */ ULONG average_ping_time; \
-    /* 0x638  */ BYTE offset1[0xBCC];     \
-    /* 0x1204 */ ULONG aid;               \
-    /* 0x1208 */ ULONG gid;               \
-    /* 0x120C */ BYTE offset2[0x8];       \
-    /* 0x1214 */ int job;                 \
-    /* 0x1218 */ int exp;                 \
-    /* 0x121C */ int level;               \
-    /* 0x1220 */ int point;               \
-    /* 0x1224 */ int next_exp;            \
-    /* 0x1228 */ int joblevel;            \
-    /* 0x122C */ int skillPoint;          \
-    /* 0x1230 */ BYTE offset3[0xA0];      \
-    /* 0x12D0 */ int jobnextexp;          \
-    /* 0x12D4 */ int jobexp;
+    /* 0x0	  */ BYTE offset0[0x630]; \
+    /* 0x630  */ ULONG average_ping_time; \
+    /* 0x634  */ BYTE offset1[0xE3C];     \
+    /* 0x1470 */ ULONG aid;               \
+    /* 0x1XXX */ ULONG gid;               \
+    /* 0x1XXX */ BYTE offset2[0x8];       \
+    /* 0x1XXX */ int job;                 \ // correct until here
+				 BYTE offset3[0x4];       \
+    /* 0x1XXX */ int exp;                 \
+				 BYTE offset4[0x4];       \
+    /* 0x1XXX */ int level;               \ //better search with ghidra, sucks to do it by hand
+    /* 0x1XXX */ int point;               \
+    /* 0x1XXX */ int next_exp;            \
+    /* 0x1XXX */ int joblevel;            \
+    /* 0x1XXX */ int skillPoint;          \
+    /* 0x1XXX */ BYTE offset5[0xA0];      \
+    /* 0x1XXX */ int jobnextexp;          \
+    /* 0x1XXX */ int jobexp;
 	//+5780
 //};
 
