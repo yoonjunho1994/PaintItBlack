@@ -147,4 +147,10 @@ int ProxySession::get_jobexp()
 {
     return this->c_session->jobexp;
 }
+
+int ProxySession::get_skillpoints()
+{
+	return this->c_session->skillPoints;
 }
+}
+

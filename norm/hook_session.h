@@ -39,6 +39,7 @@ public:
     int get_joblevel();
     int get_jobnextexp();
     int get_jobexp();
+	int get_skillpoints();
 	
 };
 }
