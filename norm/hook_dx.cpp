@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include "norm.h"
 #include "hook_dx.h"
 #include "detours.h"
@@ -25,6 +26,8 @@ HRESULT WINAPI DirectDrawCreateEx_hook(GUID *lpGuid, LPVOID *lplpDD, const IID &
     
 	return Result;
 }
+
+
 
 int dx_detour(std::shared_ptr<norm_dll::norm> state_) {
 	int err = 0;

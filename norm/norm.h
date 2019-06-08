@@ -6,6 +6,7 @@
 #include "mod.h"
 #include "splash.h"
 
+
 namespace norm_dll {
 constexpr auto RO_offset = 3; /* RO_2018-.... removes RO_*/
 constexpr auto splash_offset = 152 + 5; /* Logo length / 2 and + 10 for some gap*/

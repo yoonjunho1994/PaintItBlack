@@ -1,9 +1,12 @@
 #pragma once
+
 #include "norm.h"
+
 #define INITGUID
 #include <ddraw.h>
 #include <d3d.h>
 #include <CppCoreCheck\Warnings.h>
+
 #pragma warning(disable: ALL_CPPCORECHECK_WARNINGS)
 
 #define PROXY0(name) { return m_Instance->name();							}

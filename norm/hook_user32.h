@@ -1,5 +1,7 @@
 #pragma once
+
 #include "stdafx.h"
+
 #include "client_ver.h"
 #include "debug_socket.h"
 #include "norm.h"

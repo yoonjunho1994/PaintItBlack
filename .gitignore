@@ -21,3 +21,4 @@ Release/norm.lib
 *.pchast
 /packages/Microsoft.Gsl.0.1.2.1
 *.lastcodeanalysissucceeded
+/norm/Release

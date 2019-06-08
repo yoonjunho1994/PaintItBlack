@@ -36,15 +36,11 @@ void timestamp::send_msg(void** this_obj, int* a1, int*   a2, int*   a3, int* a4
 	}
 }
 
-#if ((CLIENT_VER <= 20180919 && CLIENT_VER >= 20180620) || CLIENT_VER_RE == 20180621)
-int timestamp::get_talk_type(void **this_obj, void **src, int *a1, int *a2, int* retval)
-#elif CLIENT_VER == 20150000
-[[gsl::suppress(26473)]] // suppressing cast from char* to char*
-int timestamp::get_talk_type(void** this_obj, char** src, int* a1, char** a2, int* retval)
-#endif
+
+int timestamp::get_talk_type(char* src, int* retval)
 {
 	// debug: c_state->dbg_sock->do_send((char*)*src);
-	if (strcmp(static_cast<char*>(*src), "/timestamp") == 0) {
+	if (strcmp(src, "/timestamp") == 0) {
 		char buf[64] = { 0 };
 		this->enabled ^= 1;
 		if (this->enabled)
