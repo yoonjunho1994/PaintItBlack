@@ -152,4 +152,8 @@ const std::string& ProxySession::get_job_type()
 {
 	return this->job_map[this->get_job<int>()].name_type;
 }
+
+const std::string& ProxySession::get_name()
+{
+	return "todo";
 }

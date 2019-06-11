@@ -54,7 +54,8 @@ void rpc::updateDiscordPresence()
 		discordPresence.state = state_buffer;
 
 		char name_buffer[256];
-        discordPresence.details = "IGN: norm";
+		sprintf_s(name_buffer, "IGN: %s", p_session.get_name());
+        discordPresence.details = name_buffer;
 
         discordPresence.startTimestamp = this->StartTime;
 		
