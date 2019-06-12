@@ -13,18 +13,6 @@ environment:
   - DEPLOY_NAME: "20180919"
     Defines: 'CLIENT_VER=20180919'
     
-  - DEPLOY_NAME: "20180621"
-    Defines: 'CLIENT_VER=20180621'
-    
-  - DEPLOY_NAME: "20180620"
-    Defines: 'CLIENT_VER=20180620'
-    
-  - DEPLOY_NAME: "20180621RE"
-    Defines: 'CLIENT_VER_RE=20180621'
-  
-  - DEPLOY_NAME: "20150000"
-    Defines: 'CLIENT_VER=20150000'
-    
 platform:
   - x86
 configuration:
@@ -47,7 +35,7 @@ deploy:
   description: '#### New clientdates:\n- {fill}\n#### Additional Features:\n- {fill}\n#### Fixes:\n- {fill}\n\nMore details can be found on the rAthena release post.\nInternal Version: %APPVEYOR_BUILD_VERSION%'
   provider: GitHub
   auth_token:
-    secure: Qpaa1sW/FtJtWOc/Uue5oV0NStzbD6p6AAeqjy3TgG3jehpPQ+ophboT9BR9rpfK # your encrypted token from GitHub
+    secure: 9ZHDxK55iuX2hTsgI2EwkyN11liop+pxp5V+x9qP7ybGJEmZ8rUJ3ZTJApkGrhbI # your encrypted token from GitHub
   artifact: COMPILED_DLL
   draft: true
   prerelease: false
