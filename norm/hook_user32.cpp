@@ -19,7 +19,7 @@ HWND WINAPI CreateWindowExA_hook(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpW
     DWORD dwStyle, int X, int Y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu,
     HINSTANCE hInstance, LPVOID lpParam)
 {
-    sprintf_s(title, "%s | [Mods] Paint it Black", lpWindowName);
+    sprintf_s(title, "%s | Paint it Black", lpWindowName);
     c_state->dbg_sock->do_send(title);
     return pCreateWindowExA(dwExStyle, lpClassName, title, dwStyle, X, Y, nWidth, nHeight, hWndParent,
         hMenu, hInstance, lpParam);
