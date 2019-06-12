@@ -12,7 +12,7 @@ public:
 	int get_talk_type(void**, char**, int*, char**, int*);
 
 private:
-	int enabled = 1;
+	int enabled = 0;
 	char msg_buf[256] = { 0 };
 };
 
