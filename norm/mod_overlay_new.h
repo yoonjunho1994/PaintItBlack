@@ -14,7 +14,7 @@ public:
 private:
 	int initialized = 0;
 	int display_ping = true;
-	int display_fps = true;
+	int display_fps = false;
 	/* postion of the overlay */
 	int x = -1;
 	int y = -1;
